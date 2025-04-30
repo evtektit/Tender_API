@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Items</h1>
+<form method="get" action="/" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <input type="text" name="search" class="form-control" placeholder="Поиск..." value="{{ search }}">
+    </div>
+    <div class="col-md-auto">
+        <button class="btn btn-outline-primary">Фильтр</button>
+    </div>
+    <div class="col-md-auto">
+        <a href="/export" class="btn btn-success">Экспорт в Excel</a>
+    </div>
+</form>
+<form method="post" action="/add" class="row g-2 mb-3">
+    <div class="col">
+        <input class="form-control" name="name" placeholder="Name">
+    </div>
+    <div class="col">
+        <input class="form-control" name="description" placeholder="Description">
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary">Добавить</button>
+    </div>
+</form>
+<ul class="list-group">
+  {% for item in items %}
+    <li class="list-group-item"><strong>{{ item.name }}</strong>: {{ item.description }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}
