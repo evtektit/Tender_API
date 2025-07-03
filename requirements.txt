@@ -1,0 +1,13 @@
+fastapi
+openai
+uvicorn
+python-telegram-bot
+python-dotenv
+sqlalchemy
+pandas
+scikit-learn
+requests
+beautifulsoup4
+jinja2
+python-multipart
+pydantic

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты по: {{ keyword }}</title>
+    <style>
+        body { font-family: sans-serif; background: #f6f6f6; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; background: #fff; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #e8e8e8; }
+        h2 { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Найдено по запросу: "{{ keyword }}"</h2>
+    <table>
+        <tr>
+            <th>№</th>
+            <th>Наименование</th>
+            <th>Цена</th>
+            <th>Дата окончания</th>
+            <th>Ссылка</th>
+            <th>ФИО</th>
+            <th>Организация</th>
+            <th>Сертификат</th>
+        </tr>
+        {% for t in tenders %}
+        <tr>
+            <td>{{ t.number }}</td>
+            <td>{{ t.name }}</td>
+            <td>{{ t.price }}</td>
+            <td>{{ t.end_date }}</td>
+            <td><a href="{{ t.link }}" target="_blank">открыть</a></td>
+            <td>{{ t["ФИО"] }}</td>
+            <td>{{ t["Организация"] }}</td>
+            <td>{{ t["Сертификат"] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
