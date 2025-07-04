@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  vpn_gateway:
+    build:
+      context: ./vpn_gateway
+      dockerfile: Dockerfile
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    volumes:
+      - ./vpn_gateway/vpn_configs:/etc/openvpn
+    restart: always
+    # ❗ Удали строку ниже, она ломает запуск через start.sh
+    # command: ["openvpn", "--config", "/etc/openvpn/vpngate_*.ovpn"]
+
+  ai_worker:
+    build:
+      context: ./ai_worker
+      dockerfile: Dockerfile.ai
+    depends_on:
+      - vpn_gateway
+    network_mode: "service:vpn_gateway"  # ✅ Только AI через VPN
+    environment:
+      - PYTHONUNBUFFERED=1
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+
+  parser:
+    build:
+      context: ./parser
+      dockerfile: Dockerfile.parser
+    depends_on:
+      - vpn_gateway
+    # ❌ Удалить network_mode — он НЕ нужен
+    # network_mode: "service:vpn_gateway"
+
+  telegram_bot:
+    build:
+      context: ./telegram_bot
+      dockerfile: Dockerfile.bot
+    depends_on:
+      - vpn_gateway
+    # ❌ Удалить network_mode — он НЕ нужен
+    # network_mode: "service:vpn_gateway"
+
+  api:
+    build:
+      context: .                     # весь проект — точка
+      dockerfile: ./api/Dockerfile.api
+    ports:
+      - "8000:8000"  # ✅ Чтобы открыть в браузере
+    depends_on:
+      - ai_worker
+      - parser
+      - telegram_bot
+    # ❌ Удалить network_mode — иначе порты не работают
+    # network_mode: "service:vpn_gateway"

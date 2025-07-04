@@ -1,51 +1,24 @@
-from fastapi import FastAPI, Query, Request
-from api.routes import ai
-from fastapi.responses import HTMLResponse, JSONResponse
-from fastapi.templating import Jinja2Templates
-from parser.zakupki_parser import search_tenders, extract_reg_number, get_signature_data
-import os
-from fastapi import Form
-from fastapi.responses import RedirectResponse
+import sys
+sys.path.append("/app")  # ⬅ Фикс для Docker
+from fastapi import FastAPI, Request
+from ai_worker.ai import ask_gpt  # ⬅ теперь всё ок
+from ai_worker.ai import ask_gpt
 
 app = FastAPI()
-app.include_router(ai.router)
-# 🔧 Инициализация Jinja2
-templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "templates"))
 
-# ✅ JSON-версия
-@app.get("/search-tenders")
-def search_tenders_api(keyword: str = Query(...)):
-    tenders = search_tenders(keyword)
-    for tender in tenders:
-        reg_number = extract_reg_number(tender["link"])
-        if reg_number:
-            sig_data = get_signature_data(reg_number)
-            tender.update(sig_data)
-    return JSONResponse(content=tenders)
+@app.get("/")
+def root():
+    return {"message": "TenderBot AI is running!"}
 
-# ✅ HTML-версия
-@app.get("/html", response_class=HTMLResponse)
-def search_html(request: Request, keyword: str = Query(...)):
-    tenders = search_tenders(keyword)
-    for tender in tenders:
-        reg_number = extract_reg_number(tender["link"])
-        if reg_number:
-            sig_data = get_signature_data(reg_number)
-            tender.update(sig_data)
-    return templates.TemplateResponse("results.html", {
-        "request": request,
-        "tenders": tenders,
-        "keyword": keyword
-    })
-@app.get("/", response_class=HTMLResponse)
-def home(request: Request):
-    return templates.TemplateResponse("form.html", {"request": request})
+@app.post("/analyze")
+async def analyze(request: Request):
+    data = await request.json()
+    text = data.get("text", "")
+    if not text:
+        return {"response": "⚠️ Текст не передан"}
+    result = ask_gpt(text)
+    return {"response": result}  # ⬅ тут была ошибка!
 
-@app.post("/search", response_class=HTMLResponse)
-def handle_form(request: Request, keyword: str = Form(...)):
-    return RedirectResponse(url=f"/html?keyword={keyword}", status_code=302)
-
-# (если используешь запуск через Python)
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
