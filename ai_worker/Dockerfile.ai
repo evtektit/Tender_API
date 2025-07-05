@@ -1,19 +1,16 @@
 FROM ubuntu:22.04
 
-# Обновление и установка нужных пакетов
+# Установка Python и утилит (без openvpn)
 RUN apt-get update && \
-    apt-get install -y openvpn curl python3 python3-pip && \
+    apt-get install -y curl python3 python3-pip && \
     ln -s /usr/bin/python3 /usr/bin/python
 
-# Установка зависимостей
 WORKDIR /app
-COPY requirements.txt /app/requirements.txt
+
+COPY ./ai_worker /app/ai_worker
+COPY ./tests /app/tests
+COPY ./ai_worker/requirements.txt /app/requirements.txt
+
 RUN pip3 install --no-cache-dir -r /app/requirements.txt
 
-# Копируем VPN-конфиг и скрипт
-COPY ai.py /app/ai.py
-
-# Запускаем VPN и потом скрипт
-CMD openvpn --config /etc/openvpn/vpngate_24.253.99.103_tcp_1721.ovpn --daemon && \
-    sleep 10 && \
-    python /app/ai.py
+CMD ["python", "/app/ai_worker/ai.py"]

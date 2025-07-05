@@ -4,3 +4,5 @@ jinja2
 httpx
 python-dotenv
 openai
+requests
+beautifulsoup4

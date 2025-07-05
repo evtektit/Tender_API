@@ -9,7 +9,10 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 # Копируем код API
 COPY ./api /app
 
-# 👇 Копируем ai_worker внутрь
+# 👇 Копируем ai_worker и parser
 COPY ./ai_worker /app/ai_worker
+COPY ./parser /app/parser
+
+ENV PYTHONPATH=/app
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

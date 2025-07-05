@@ -119,3 +119,13 @@ def parse_tenders_and_save(keyword, page=1, output_file="tenders_with_signatures
             sig_data = get_signature_data(reg_number)
             tender.update(sig_data)
     save_to_csv(tenders, output_file)
+
+# 📎 Обёртка для FastAPI
+def parse_data(keyword: str, page: int = 1) -> dict:
+    tenders = search_tenders(keyword, page)
+    for tender in tenders:
+        reg_number = extract_reg_number(tender["link"])
+        if reg_number:
+            sig_data = get_signature_data(reg_number)
+            tender.update(sig_data)
+    return {"results": tenders}

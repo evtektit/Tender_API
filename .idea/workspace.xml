@@ -4,7 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d30dd2db-6417-47e6-9067-2cd8326abf4a" name="Changes" comment="" />
+    <list default="true" id="d30dd2db-6417-47e6-9067-2cd8326abf4a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/api/routes/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/routes/home.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/routes/parser_route.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/parser/test_dummy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/TenderBotAIProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TenderBotAIProject.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai_worker/Dockerfile.ai" beforeDir="false" afterPath="$PROJECT_DIR$/ai_worker/Dockerfile.ai" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai_worker/ai.py" beforeDir="false" afterPath="$PROJECT_DIR$/ai_worker/ai.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai_worker/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ai_worker/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/Dockerfile.api" beforeDir="false" afterPath="$PROJECT_DIR$/api/Dockerfile.api" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/api/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/routes/ai.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes/ai.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser/zakupki_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/parser/zakupki_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-113.opengw.net_tcp_443.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-113.opengw.net_tcp_443.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-255.opengw.net_udp_1195.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-255.opengw.net_udp_1195.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn117299365.opengw.net_udp_1195.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn117299365.opengw.net_udp_1195.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn165493972.opengw.net_udp_42393.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn165493972.opengw.net_udp_42393.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn185231257.opengw.net_tcp_1378.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn185231257.opengw.net_tcp_1378.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn315847091.opengw.net_udp_1195.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn315847091.opengw.net_udp_1195.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn496439723.opengw.net_udp_1411.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn496439723.opengw.net_udp_1411.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn581684567.opengw.net_udp_1308.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn581684567.opengw.net_udp_1308.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn597024046.opengw.net_udp_1969.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn597024046.opengw.net_udp_1969.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn680849215.opengw.net_udp_1417.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn680849215.opengw.net_udp_1417.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn685879574.opengw.net_udp_1768.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn685879574.opengw.net_udp_1768.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn718207268.opengw.net_udp_1195.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn718207268.opengw.net_udp_1195.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn720078617.opengw.net_udp_1525.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn720078617.opengw.net_udp_1525.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn780143277.opengw.net_udp_1195.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn780143277.opengw.net_udp_1195.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn922387505.opengw.net_udp_1195.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn922387505.opengw.net_udp_1195.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn923730258.opengw.net_udp_1832.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn923730258.opengw.net_udp_1832.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn927125019.opengw.net_udp_1907.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn927125019.opengw.net_udp_1907.ovpn" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,14 +88,16 @@
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Python.ai.executor&quot;: &quot;Debug&quot;,
+    &quot;Python tests.pytest for pytest.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ai.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;Python.telegram_bot.executor&quot;: &quot;Run&quot;,
     &quot;Python.tender_parser.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev/refactor-parser&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/SHERHAN/PycharmProjects/TenderBotAIProject/ai_worker&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -80,14 +115,14 @@
       <recent name="C:\Users\SHERHAN\PycharmProjects\TenderBotAIProject\telegram_bot" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\SHERHAN\PycharmProjects\TenderBotAIProject\api\routes" />
       <recent name="C:\Users\SHERHAN\PycharmProjects\TenderBotAIProject\vpn_gateway\vpn_configs" />
       <recent name="C:\Users\SHERHAN\PycharmProjects\TenderBotAIProject\vpn_gateway" />
       <recent name="C:\Users\SHERHAN\PycharmProjects\TenderBotAIProject\api" />
       <recent name="C:\Users\SHERHAN\PycharmProjects\TenderBotAIProject\ai_worker\vpn_configs" />
-      <recent name="C:\Users\SHERHAN\PycharmProjects\TenderBotAIProject\telegram_bot" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python tests.pytest for pytest">
     <configuration name="ai" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TenderBotAIProject" />
       <option name="ENV_FILES" value="" />
@@ -111,6 +146,29 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="pytest for pytest" type="tests" factoryName="py.test" nameIsGenerated="true">
+      <module name="TenderBotAIProject" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Remote Python 3.10.12 Docker Compose (ai_worker)" />
+      <option name="WORKING_DIRECTORY" value="/app/tests " />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;pytest&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.ai" />
+      <item itemvalue="Python tests.pytest for pytest" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.ai" />
@@ -120,8 +178,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-PY-251.25410.159" />
-        <option value="bundled-python-sdk-e0ed3721d81e-36ea0e71a18c-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.25410.159" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-PY-251.26927.74" />
+        <option value="bundled-python-sdk-657d8234b839-64d779b69b7a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.26927.74" />
       </set>
     </attachedChunks>
   </component>
@@ -162,7 +220,14 @@
       <workItem from="1751625832087" duration="2223000" />
       <workItem from="1751633731157" duration="2119000" />
       <workItem from="1751635887784" duration="2017000" />
-      <workItem from="1751644131763" duration="688000" />
+      <workItem from="1751644131763" duration="3688000" />
+      <workItem from="1751647886160" duration="2286000" />
+      <workItem from="1751651375136" duration="6130000" />
+      <workItem from="1751687389957" duration="684000" />
+      <workItem from="1751688172267" duration="3323000" />
+      <workItem from="1751698371576" duration="3601000" />
+      <workItem from="1751704026741" duration="2044000" />
+      <workItem from="1751710494606" duration="1947000" />
     </task>
     <servers />
   </component>
@@ -195,8 +260,9 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/TenderBotAIProject$tender_parser.coverage" NAME="tender_parser Coverage Results" MODIFIED="1751387601171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />
+    <SUITE FILE_PATH="coverage/TenderBotAIProject$pytest_for_pytest.coverage" NAME="pytest for pytest Coverage Results" MODIFIED="1751651597813" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="/app/tests " />
     <SUITE FILE_PATH="coverage/TenderBotAIProject$main.coverage" NAME="main Coverage Results" MODIFIED="1751486473844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
     <SUITE FILE_PATH="coverage/TenderBotAIProject$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1751395052499" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />
-    <SUITE FILE_PATH="coverage/TenderBotAIProject$ai.coverage" NAME="ai Coverage Results" MODIFIED="1751633815874" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ai_worker" />
+    <SUITE FILE_PATH="coverage/TenderBotAIProject$ai.coverage" NAME="ai Coverage Results" MODIFIED="1751647777750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ai_worker" />
   </component>
 </project>
