@@ -1,0 +1,12 @@
+[
+  {
+    "name": "zakupki",
+    "url": "https://zakupki.gov.ru/epz/order/extendedsearch/results.html",
+    "parser": "zakupki_parser"
+  },
+  {
+    "name": "example_site",
+    "url": "https://example.com/search?q=",
+    "parser": "example_parser"
+  }
+]
