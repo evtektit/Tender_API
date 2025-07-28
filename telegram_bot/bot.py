@@ -31,7 +31,7 @@ async def handle_ai_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("🔍 Отправляю в AI...")
         try:
             async with httpx.AsyncClient() as client:
-                response = await client.post("http://localhost:8000/ai/ask", json={"prompt": text})
+                response = await client.post("http://api:8000/ai/ask", json={"prompt": text})
                 result = response.json().get("response", "⚠️ Ошибка AI")
                 await update.message.reply_text(result)
         except Exception as e:
