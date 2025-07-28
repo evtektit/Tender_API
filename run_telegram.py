@@ -1,5 +1,5 @@
 import asyncio
-from telegram_bot.telegram_bot import init_bot
+from telegram_bot.bot import init_bot
 
 async def main():
     app = await init_bot()
