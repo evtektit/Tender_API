@@ -3,3 +3,8 @@ scikit-learn
 pandas
 python-dotenv
 pytest
+huggingface_hub
+transformers
+openai
+python-dotenv
+

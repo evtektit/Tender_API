@@ -1,16 +1,26 @@
 FROM ubuntu:22.04
 
-# Установка Python и утилит (без openvpn)
+# Устанавливаем зависимости системы
 RUN apt-get update && \
-    apt-get install -y curl python3 python3-pip && \
+    apt-get install -y \
+        curl \
+        python3 \
+        python3-pip \
+        git \
+        build-essential && \
     ln -s /usr/bin/python3 /usr/bin/python
 
-WORKDIR /app
+# Рабочая директория
+WORKDIR /ai_worker
 
-COPY ./ai_worker /app/ai_worker
-COPY ./tests /app/tests
-COPY ./ai_worker/requirements.txt /app/requirements.txt
+# Сначала копируем только requirements.txt (чтобы кешировалось)
+COPY ./ai_worker/requirements.txt ./requirements.txt
 
-RUN pip3 install --no-cache-dir -r /app/requirements.txt
+# Устанавливаем Python-библиотеки
+RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python", "/app/ai_worker/ai.py"]
+# Только потом копируем остальной код
+COPY ./ai_worker .
+
+# Запуск (опционально)
+CMD ["python", "ml_model.py"]
