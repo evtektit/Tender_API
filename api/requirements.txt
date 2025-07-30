@@ -3,6 +3,6 @@ uvicorn
 jinja2
 httpx
 python-dotenv
-openai
+openai>=1.0.0
 requests
 beautifulsoup4

@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d30dd2db-6417-47e6-9067-2cd8326abf4a" name="Changes" comment="Запуск ТГ бот">
+    <list default="true" id="d30dd2db-6417-47e6-9067-2cd8326abf4a" name="Changes" comment="Удачный запуск ТГ бот">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/Dockerfile.api" beforeDir="false" afterPath="$PROJECT_DIR$/api/Dockerfile.api" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai_worker/openai_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/ai_worker/openai_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/api/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-113.opengw.net_tcp_443.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-113.opengw.net_tcp_443.ovpn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-255.opengw.net_udp_1195.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-255.opengw.net_udp_1195.ovpn" afterDir="false" />
@@ -120,7 +120,7 @@
       <recent name="C:\Users\SHERHAN\PycharmProjects\TenderBotAIProject\ai_worker\vpn_configs" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.bot">
+  <component name="RunManager" selected="Python.ai">
     <configuration name="TenderBotAIProject" type="PythonConfigurationType" factoryName="Python">
       <module name="TenderBotAIProject" />
       <option name="ENV_FILES" value="" />
@@ -242,9 +242,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.ai" />
         <item itemvalue="Python.bot" />
         <item itemvalue="Python.run_ai_worker" />
-        <item itemvalue="Python.ai" />
       </list>
     </recent_temporary>
   </component>
@@ -330,6 +330,8 @@
       <workItem from="1753681203154" duration="659000" />
       <workItem from="1753706957749" duration="1497000" />
       <workItem from="1753724827016" duration="7429000" />
+      <workItem from="1753870498359" duration="1882000" />
+      <workItem from="1753877325223" duration="2286000" />
     </task>
     <task id="LOCAL-00001" summary="26,07,2025">
       <option name="closed" value="true" />
@@ -355,7 +357,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753731354610</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Удачный запуск ТГ бот">
+      <option name="closed" value="true" />
+      <created>1753867183099</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1753867183099</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -379,16 +389,17 @@
     <MESSAGE value="26,07,2025" />
     <MESSAGE value="28,07,2025" />
     <MESSAGE value="Запуск ТГ бот" />
-    <option name="LAST_COMMIT_MESSAGE" value="Запуск ТГ бот" />
+    <MESSAGE value="Удачный запуск ТГ бот" />
+    <option name="LAST_COMMIT_MESSAGE" value="Удачный запуск ТГ бот" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/TenderBotAIProject$bot.coverage" NAME="bot Coverage Results" MODIFIED="1753729888456" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/telegram_bot" />
+    <SUITE FILE_PATH="coverage/TenderBotAIProject$bot.coverage" NAME="bot Coverage Results" MODIFIED="1753870764900" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/telegram_bot" />
     <SUITE FILE_PATH="coverage/TenderBotAIProject$tender_parser.coverage" NAME="tender_parser Coverage Results" MODIFIED="1751387601171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />
-    <SUITE FILE_PATH="coverage/TenderBotAIProject$TenderBotAIProject.coverage" NAME="TenderBotAIProject Coverage Results" MODIFIED="1753666039861" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/TenderBotAIProject$TenderBotAIProject.coverage" NAME="TenderBotAIProject Coverage Results" MODIFIED="1753870775062" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/TenderBotAIProject$pytest_for_pytest.coverage" NAME="pytest for pytest Coverage Results" MODIFIED="1751651597813" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="/app/tests " />
     <SUITE FILE_PATH="coverage/TenderBotAIProject$main.coverage" NAME="main Coverage Results" MODIFIED="1751486473844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/api" />
     <SUITE FILE_PATH="coverage/TenderBotAIProject$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1751395052499" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />
-    <SUITE FILE_PATH="coverage/TenderBotAIProject$ai.coverage" NAME="ai Coverage Results" MODIFIED="1753665788258" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ai_worker" />
+    <SUITE FILE_PATH="coverage/TenderBotAIProject$ai.coverage" NAME="ai Coverage Results" MODIFIED="1753870786060" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ai_worker" />
     <SUITE FILE_PATH="coverage/TenderBotAIProject$run_ai_worker.coverage" NAME="run_ai_worker Coverage Results" MODIFIED="1753678747639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ai_worker" />
   </component>
 </project>

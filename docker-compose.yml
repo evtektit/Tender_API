@@ -47,12 +47,18 @@ services:
       dockerfile: ./telegram_bot/Dockerfile.bot
     volumes:
       - ./telegram_bot:/app
+    env_file:
+     - .env
+    dns:
+      - 8.8.8.8
     depends_on:
       - api
     environment:
       - BOT_TOKEN=${BOT_TOKEN}
     networks:
-      - backend
+      backend:
+        aliases:
+          - api
 
   api:
     build:
@@ -62,6 +68,8 @@ services:
       - "8000:8000"
     depends_on:
       - parser
+    env_file:
+      - .env
     networks:
       - backend
 
