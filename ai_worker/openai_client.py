@@ -1,6 +1,16 @@
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
+from logger import get_logger
+logger = get_logger(__name__)
+
+def ask_gpt(prompt, ...):
+    logger.info(f"🤖 Получен запрос к ИИ: {prompt}")
+    ...
+    logger.debug(f"📥 Ответ от модели: {response}")
+    ...
+    except Exception as e:
+        logger.exception("💥 Ошибка при обращении к Together.ai")
 
 load_dotenv()
 
