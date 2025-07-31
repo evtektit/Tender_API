@@ -4,7 +4,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from api.routes import parser_route, ai
 from ai_worker.openai_client import ask_gpt
-from parser.zakupki_parser import search_tenders
+from parser.main_parser import run_all_parsers
 import os
 import traceback
 app = FastAPI(debug=True)

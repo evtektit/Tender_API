@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d30dd2db-6417-47e6-9067-2cd8326abf4a" name="Changes" comment="Проект запустился 30,07,2025">
+    <list default="true" id="d30dd2db-6417-47e6-9067-2cd8326abf4a" name="Changes" comment="Обновлён openai_client.py — добавлен клиент Together.ai">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai_worker/openai_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/ai_worker/openai_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser/zakupki_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/parser/zakupki_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai_worker/ai.py" beforeDir="false" afterPath="$PROJECT_DIR$/ai_worker/ai.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/routes/ai.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/routes/ai.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/main_template_ui.html" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/main_template_ui.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-113.opengw.net_tcp_443.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-113.opengw.net_tcp_443.ovpn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-255.opengw.net_udp_1195.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-255.opengw.net_udp_1195.ovpn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn117299365.opengw.net_udp_1195.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn117299365.opengw.net_udp_1195.ovpn" afterDir="false" />
@@ -338,6 +340,10 @@
       <workItem from="1753933218969" duration="3145000" />
       <workItem from="1753939495547" duration="3942000" />
       <workItem from="1753944857418" duration="1622000" />
+      <workItem from="1753947779073" duration="566000" />
+      <workItem from="1753950542505" duration="587000" />
+      <workItem from="1753951310835" duration="451000" />
+      <workItem from="1753955087241" duration="472000" />
     </task>
     <task id="LOCAL-00001" summary="26,07,2025">
       <option name="closed" value="true" />
@@ -379,7 +385,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753880150327</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Обновлён openai_client.py — добавлен клиент Together.ai">
+      <option name="closed" value="true" />
+      <created>1753947968683</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1753947968683</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -405,7 +419,8 @@
     <MESSAGE value="Запуск ТГ бот" />
     <MESSAGE value="Удачный запуск ТГ бот" />
     <MESSAGE value="Проект запустился 30,07,2025" />
-    <option name="LAST_COMMIT_MESSAGE" value="Проект запустился 30,07,2025" />
+    <MESSAGE value="Обновлён openai_client.py — добавлен клиент Together.ai" />
+    <option name="LAST_COMMIT_MESSAGE" value="Обновлён openai_client.py — добавлен клиент Together.ai" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/TenderBotAIProject$bot.coverage" NAME="bot Coverage Results" MODIFIED="1753870764900" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/telegram_bot" />
