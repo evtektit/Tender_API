@@ -7,6 +7,7 @@ from ai_worker.openai_client import ask_gpt
 from parser.zakupki_parser import search_tenders
 import os
 import traceback
+app = FastAPI(debug=True)
 
 from logger import get_logger
 logger = get_logger(__name__)
@@ -18,7 +19,7 @@ async def startup_event():
 @app.on_event("shutdown")
 async def shutdown_event():
     logger.info("🛑 FastAPI завершил работу")
-app = FastAPI(debug=True)
+
 templates = Jinja2Templates(directory=os.path.join("api", "templates"))
 
 # Статика (если понадобится позже)

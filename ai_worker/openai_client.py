@@ -4,13 +4,22 @@ from openai import OpenAI
 from logger import get_logger
 logger = get_logger(__name__)
 
-def ask_gpt(prompt, ...):
+def ask_gpt(prompt: str, model: str = "mistralai/Mistral-7B-Instruct-v0.2", temperature: float = 0.7):
     logger.info(f"🤖 Получен запрос к ИИ: {prompt}")
-    ...
-    logger.debug(f"📥 Ответ от модели: {response}")
-    ...
+    try:
+        # Твой вызов модели тут:
+        response = {
+            "choices": [{
+                "message": {
+                    "content": "🔧 Заглушка: ИИ пока не отвечает"
+                }
+            }]
+        }
+        logger.debug(f"📥 Ответ от модели: {response}")
+        return response["choices"][0]["message"]["content"]
     except Exception as e:
         logger.exception("💥 Ошибка при обращении к Together.ai")
+        return "⚠️ Произошла ошибка при обращении к ИИ"
 
 load_dotenv()
 
