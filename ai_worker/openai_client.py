@@ -1,27 +1,10 @@
 import os
-from dotenv import load_dotenv
 from openai import OpenAI
+from dotenv import load_dotenv
 from logger import get_logger
-logger = get_logger(__name__)
-
-def ask_gpt(prompt: str, model: str = "mistralai/Mistral-7B-Instruct-v0.2", temperature: float = 0.7):
-    logger.info(f"🤖 Получен запрос к ИИ: {prompt}")
-    try:
-        # Твой вызов модели тут:
-        response = {
-            "choices": [{
-                "message": {
-                    "content": "🔧 Заглушка: ИИ пока не отвечает"
-                }
-            }]
-        }
-        logger.debug(f"📥 Ответ от модели: {response}")
-        return response["choices"][0]["message"]["content"]
-    except Exception as e:
-        logger.exception("💥 Ошибка при обращении к Together.ai")
-        return "⚠️ Произошла ошибка при обращении к ИИ"
 
 load_dotenv()
+logger = get_logger(__name__)
 
 client = OpenAI(
     api_key=os.getenv("TOGETHER_API_KEY"),
@@ -29,6 +12,7 @@ client = OpenAI(
 )
 
 def ask_gpt(prompt: str, model: str = "mistralai/Mistral-7B-Instruct-v0.2", temperature: float = 0.7) -> str:
+    logger.info(f"🤖 Получен запрос к ИИ: {prompt}")
     try:
         response = client.chat.completions.create(
             model=model,
@@ -38,6 +22,9 @@ def ask_gpt(prompt: str, model: str = "mistralai/Mistral-7B-Instruct-v0.2", temp
             ],
             temperature=temperature
         )
-        return response.choices[0].message.content.strip()
+        reply = response.choices[0].message.content.strip()
+        logger.debug(f"🧠 Ответ ИИ: {reply}")
+        return reply
     except Exception as e:
-        return f"🛑 Ошибка Together.ai: {e}"
+        logger.exception("💥 Ошибка при обращении к Together AI")
+        return "⚠️ Ошибка при работе с ИИ"

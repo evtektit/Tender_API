@@ -7,8 +7,24 @@
     <list default="true" id="d30dd2db-6417-47e6-9067-2cd8326abf4a" name="Changes" comment="Проект запустился 30,07,2025">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ai_worker/openai_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/ai_worker/openai_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_log.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser/zakupki_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/parser/zakupki_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-113.opengw.net_tcp_443.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-113.opengw.net_tcp_443.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-255.opengw.net_udp_1195.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_public-vpn-255.opengw.net_udp_1195.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn117299365.opengw.net_udp_1195.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn117299365.opengw.net_udp_1195.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn165493972.opengw.net_udp_42393.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn165493972.opengw.net_udp_42393.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn185231257.opengw.net_tcp_1378.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn185231257.opengw.net_tcp_1378.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn315847091.opengw.net_udp_1195.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn315847091.opengw.net_udp_1195.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn496439723.opengw.net_udp_1411.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn496439723.opengw.net_udp_1411.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn581684567.opengw.net_udp_1308.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn581684567.opengw.net_udp_1308.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn597024046.opengw.net_udp_1969.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn597024046.opengw.net_udp_1969.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn680849215.opengw.net_udp_1417.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn680849215.opengw.net_udp_1417.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn685879574.opengw.net_udp_1768.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn685879574.opengw.net_udp_1768.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn718207268.opengw.net_udp_1195.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn718207268.opengw.net_udp_1195.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn720078617.opengw.net_udp_1525.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn720078617.opengw.net_udp_1525.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn780143277.opengw.net_udp_1195.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn780143277.opengw.net_udp_1195.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn922387505.opengw.net_udp_1195.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn922387505.opengw.net_udp_1195.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn923730258.opengw.net_udp_1832.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn923730258.opengw.net_udp_1832.ovpn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn927125019.opengw.net_udp_1907.ovpn" beforeDir="false" afterPath="$PROJECT_DIR$/vpn_gateway/vpn_configs/vpngate_vpn927125019.opengw.net_udp_1907.ovpn" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -320,6 +336,8 @@
       <workItem from="1753893662017" duration="1767000" />
       <workItem from="1753895466092" duration="1377000" />
       <workItem from="1753933218969" duration="3145000" />
+      <workItem from="1753939495547" duration="3942000" />
+      <workItem from="1753944857418" duration="1622000" />
     </task>
     <task id="LOCAL-00001" summary="26,07,2025">
       <option name="closed" value="true" />
