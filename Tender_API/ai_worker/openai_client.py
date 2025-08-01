@@ -11,6 +11,8 @@ client = OpenAI(
     base_url="https://api.together.xyz/v1"
 )
 
+logger.info(f"🔑 TOGETHER_API_KEY загружен: {bool(client.api_key)}")
+
 def ask_gpt(prompt: str, model: str = "mistralai/Mistral-7B-Instruct-v0.2", temperature: float = 0.7) -> str:
     logger.info(f"🤖 Получен запрос к ИИ: {prompt}")
     try:

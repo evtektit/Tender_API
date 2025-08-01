@@ -75,14 +75,17 @@ services:
 
   watchdog:
     build:
-     context: ./watchdog
-     dockerfile: Dockerfile.watchdog
+      context: ./watchdog
+      dockerfile: Dockerfile.watchdog
     container_name: tenderbotaiproject-watchdog
     restart: always
+    environment:
+       - API_URL=http://api:8000/health
     depends_on:
-     - telegram_bot
+       - api
     networks:
-     - tender-net
+       - tender-net
+
 
 
 networks:

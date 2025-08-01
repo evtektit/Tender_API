@@ -12,5 +12,10 @@ COPY . .
 # Переменные окружения
 ENV PYTHONUNBUFFERED=1
 
+RUN ls -la
+RUN cat debug.py
+
+
 # Стартуем
-CMD ["python", "bot.py"]
+CMD ["python", "debug.py"]
+
