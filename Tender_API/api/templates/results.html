@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты по запросу</title>
+    <style>
+        body { font-family: sans-serif; padding: 2rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 8px; }
+        th { background: #eee; }
+    </style>
+</head>
+<body>
+    <h1>Результаты по запросу: "{{ query }}"</h1>
+    {% if results %}
+    <table>
+        <tr>
+            <th>Номер</th>
+            <th>Наименование</th>
+            <th>Цена</th>
+            <th>Дата окончания</th>
+            <th>Ссылка</th>
+        </tr>
+        {% for item in results %}
+        <tr>
+            <td>{{ item.number }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.end_date }}</td>
+            <td><a href="{{ item.link }}" target="_blank">Открыть</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Ничего не найдено</p>
+    {% endif %}
+</body>
+</html>
