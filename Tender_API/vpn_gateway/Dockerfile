@@ -12,7 +12,7 @@ COPY start.sh /start.sh
 COPY fix_ovpn.sh /fix_ovpn.sh
 
 # Делаем их исполняемыми и применяем фиксы
-RUN chmod +x /start.sh /fix_ovpn.sh && /fix_ovpn.sh
+RUN chmod +x /start.sh
 
 # Запуск VPN с перебором конфигов
 CMD ["/start.sh"]

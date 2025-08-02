@@ -1,8 +1,8 @@
 # telegram_bot/handlers.py
 from aiogram import types
 import httpx
-from ai_worker.logger import get_logger
-logger = get_logger(__name__)
+import logging
+logger = logging.getLogger(__name__)
 
 async def handle_message(message):
     logger.info(f"📩 Сообщение от {message.from_user.id}: {message.text}")

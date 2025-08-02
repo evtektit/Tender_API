@@ -1,5 +1,6 @@
 python-telegram-bot==20.8
-httpx
 python-dotenv
 nest_asyncio
+aiogram>=3.0.0
+httpx>=0.24.1
 
