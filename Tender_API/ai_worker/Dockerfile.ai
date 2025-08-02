@@ -1,12 +1,16 @@
-FROM python:3.11-slim
+FROM python:3.11
 
 WORKDIR /app
 
+# Путь относительный к context (а context — это ./ai_worker)
 COPY requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Копируем весь код из ai_worker внутрь контейнера
 COPY . .
 
-ENV PYTHONPATH=/app
+# Указываем рабочую директорию
+WORKDIR /app
 
-CMD ["uvicorn", "ai_worker.ai:app", "--host", "0.0.0.0", "--port", "8000"]
+# Запуск
+CMD ["python", "run_ai_worker.py"]
