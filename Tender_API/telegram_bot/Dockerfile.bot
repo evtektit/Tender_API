@@ -2,12 +2,16 @@ FROM python:3.11
 
 WORKDIR /app
 
-# Устанавливаем зависимости
+# requirements.txt лежит в этой же папке telegram_bot
 COPY requirements.txt .
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Копируем код
+# Копируем весь код бота
 COPY . .
 
-# Запуск
+ENV PYTHONUNBUFFERED=1
+
+ENV PYTHONPATH=/app
+
 CMD ["python", "bot.py"]

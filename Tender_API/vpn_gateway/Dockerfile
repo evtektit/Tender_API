@@ -1,19 +1,16 @@
 FROM ubuntu:22.04
 
-# Устанавливаем OpenVPN и curl
-RUN apt-get update && \
-    apt-get install -y openvpn curl
+WORKDIR /app
 
-# Копируем VPN конфиги
-COPY vpn_configs/ /etc/openvpn/
+# Установка зависимостей
+RUN apt update && apt install -y openvpn curl unzip
 
 # Копируем скрипты
-COPY start.sh /start.sh
-COPY fix_ovpn.sh /fix_ovpn.sh
+COPY start.sh /app/start.sh
+COPY fix_ovpn.sh /app/fix_ovpn.sh
 
-# Делаем их исполняемыми и применяем фиксы
-RUN chmod +x /start.sh
+# Даём права на выполнение
+RUN chmod +x /app/start.sh /app/fix_ovpn.sh
 
-# Запуск VPN с перебором конфигов
-CMD ["/start.sh"]
-
+# Запуск
+CMD ["/app/start.sh"]

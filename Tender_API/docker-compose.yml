@@ -70,10 +70,13 @@ services:
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
     volumes:
-      - ./vpn_gateway/config:/etc/openvpn
+      - ./vpn_gateway/vpn_configs:/etc/openvpn
     restart: always
     networks:
       - tender-net
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
 
   watchdog:
     build:
@@ -91,3 +94,4 @@ services:
 networks:
   tender-net:
     driver: bridge
+

@@ -15,7 +15,14 @@ logger.info("🚀 Telegram-бот стартует")
 # Загрузка .env
 load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-API_URL = "http://api:8000/ai/ask"
+
+env = os.getenv("ENVIRONMENT", "docker")
+
+if env == "local":
+    API_URL = "http://localhost:8000/ai/ask"
+else:
+    API_URL = "http://api:8000/ai/ask"
+
 
 # Бот и диспетчер
 bot = Bot(token=BOT_TOKEN)

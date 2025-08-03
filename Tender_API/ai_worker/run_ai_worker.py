@@ -6,4 +6,4 @@ logger = get_logger(__name__)
 if __name__ == "__main__":
     logger.info("🚀 Запуск run_ai_worker")
     result = ask_gpt("Объясни, как участвовать в тендере по 44-ФЗ")
-    logger.info(f"🤖 Ответ: {result}")
+    logger.info(f"📨 Ответ: {result}")
