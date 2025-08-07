@@ -4,8 +4,8 @@ services:
 
   api:
     build:
-      context: .
-      dockerfile: ./api/Dockerfile.api
+      context: Tender_API
+      dockerfile: api/Dockerfile.api
     container_name: tenderbotaiproject-api
     restart: always
     env_file:
@@ -19,8 +19,8 @@ services:
 
   parser:
     build:
-      context: ./parser
-      dockerfile: Dockerfile.parser
+      context: parser
+      dockerfile: parser/Dockerfile.parser
     container_name: tenderbotaiproject-parser
     restart: always
     env_file:
@@ -32,8 +32,8 @@ services:
 
   telegram_bot:
     build:
-      context: ./telegram_bot
-      dockerfile: Dockerfile.bot
+      context: telegram_bot
+      dockerfile: telegram_bot/Dockerfile.bot
     container_name: tenderbotaiproject-telegram-bot
     restart: always
     env_file:
@@ -50,8 +50,8 @@ services:
 
   ai_worker:
     build:
-      context: ./ai_worker
-      dockerfile: Dockerfile.ai
+      context: ai_worker
+      dockerfile: ai_worker/Dockerfile.ai
     container_name: tenderbotaiproject-ai-worker
     restart: always
     env_file:
@@ -60,8 +60,8 @@ services:
 
   vpn_gateway:
     build:
-      context: ./vpn_gateway
-      dockerfile: Dockerfile
+      context: vpn_gateway
+      dockerfile: vpn_gateway/Dockerfile
     container_name: tenderbotaiproject-vpn
     cap_add:
       - NET_ADMIN
@@ -80,8 +80,8 @@ services:
 
   watchdog:
     build:
-      context: ./watchdog
-      dockerfile: Dockerfile.watchdog
+      context: watchdog
+      dockerfile: watchdog/Dockerfile.watchdog
     container_name: tenderbotaiproject-watchdog
     restart: always
     environment:
