@@ -5,8 +5,23 @@
     "parser": "zakupki_parser"
   },
   {
-    "name": "example_site",
-    "url": "https://example.com/search?q=",
-    "parser": "example_parser"
+    "name": "rts",
+    "url": "https://www.rts-tender.ru",
+    "parser": "rts_parser"
+  },
+  {
+    "name": "sber",
+    "url": "https://www.sberbank-ast.ru",
+    "parser": "sber_parser"
+  },
+  {
+    "name": "zakazrf",
+    "url": "https://zakazrf.ru",
+    "parser": "zakazrf_parser"
+  },
+  {
+    "name": "agregatoreat",
+    "url": "https://agregatoreat.ru",
+    "parser": "agregator_parser"
   }
 ]

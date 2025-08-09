@@ -1,11 +1,17 @@
-FROM python:3.11-slim
+FROM python:3.11
 
 WORKDIR /app
 
+# Установка зависимостей
 COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-RUN pip install --no-cache-dir -r requirements.txt
+# Установка Playwright браузеров
+RUN python -m playwright install --with-deps
 
+# Копируем остальной код
 COPY . .
 
-CMD ["python", "zakupki_parser.py"]
+# Точка входа
+CMD ["python", "main.py"]
