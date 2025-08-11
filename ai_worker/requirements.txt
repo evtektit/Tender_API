@@ -1,0 +1,9 @@
+openai>=1.0.0
+scikit-learn
+pandas
+huggingface_hub
+transformers
+python-dotenv
+httpx
+uvicorn
+fastapi

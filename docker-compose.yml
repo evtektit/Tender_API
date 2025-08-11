@@ -1,0 +1,97 @@
+version: "3.9"
+
+services:
+
+  api:
+    build:
+      context: Tender_API
+      dockerfile: api/Dockerfile.api
+    container_name: tenderbotaiproject-api
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - ai_worker
+    networks:
+      - tender-net
+
+  parser:
+    build:
+      context: parser
+      dockerfile: parser/Dockerfile.parser
+    container_name: tenderbotaiproject-parser
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - api
+    networks:
+      - tender-net  # ❗️без VPN
+
+  telegram_bot:
+    build:
+      context: telegram_bot
+      dockerfile: telegram_bot/Dockerfile.bot
+    container_name: tenderbotaiproject-telegram-bot
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - api
+      - ai_worker
+    networks:
+      - tender-net
+    dns:
+      - 8.8.8.8
+
+  ai_worker:
+    build:
+      context: ai_worker
+      dockerfile: ai_worker/Dockerfile.ai
+    container_name: tenderbotaiproject-ai-worker
+    restart: always
+    env_file:
+      - .env
+    network_mode: "service:vpn_gateway"  # 👈 только AI через VPN
+
+  vpn_gateway:
+    build:
+      context: vpn_gateway
+      dockerfile: vpn_gateway/Dockerfile
+    container_name: tenderbotaiproject-vpn
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+    volumes:
+      - ./vpn_gateway/vpn_configs:/etc/openvpn
+    restart: always
+    networks:
+      - tender-net
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+
+  watchdog:
+    build:
+      context: watchdog
+      dockerfile: watchdog/Dockerfile.watchdog
+    container_name: tenderbotaiproject-watchdog
+    restart: always
+    environment:
+       - API_URL=http://api:8000/health
+    depends_on:
+       - api
+    networks:
+       - tender-net
+
+networks:
+  tender-net:
+    driver: bridge
+
