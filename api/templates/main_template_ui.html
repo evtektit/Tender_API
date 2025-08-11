@@ -1,52 +1,235 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>TenderBot :: AI & Parser</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <title>Tender UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body{background:#FAF6EF}
+    .page{max-width:1100px;margin:24px auto}
+    .chat{background:#FFF;border:1px solid #E6D9BD;border-radius:12px;padding:12px;height:420px;overflow:auto}
+    .msg{margin:8px 0;padding:10px 12px;border-radius:12px;max-width:80%}
+    .msg.user{background:#F3E9D2;margin-left:auto}
+    .msg.bot{background:#FFF7E6;border:1px solid #E6D9BD}
+    .input-wrap{display:flex;gap:8px;margin-top:10px}
+    textarea{height:88px;resize:vertical;border-color:#E6D9BD}
+    .smallmuted{font-size:.9rem;color:#6b6b6b}
+    .card-b{background:#FFF;border:1px solid #E6D9BD;border-radius:12px}
+    .result-box{background:#F3E9D2;color:#2F2F2F;border:1px solid #E6D9BD;border-radius:.5rem;padding:12px;white-space:pre-wrap}
+    table thead th{position:sticky;top:0;background:#FFF7E6}
+    a.trunc{max-width:340px;display:inline-block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  </style>
 </head>
-<body class="bg-dark text-light py-4">
-    <div class="container">
-        <h1 class="text-center mb-5">TenderBot :: AI & Parser</h1>
+<body>
+  <div class="page container">
+    <h1 class="mb-3">TenderBot • тест UI</h1>
 
-
-        <div class="card bg-secondary mb-4">
-    <div class="card-body">
-        <h2 class="card-title">🤖 AI-ассистент</h2>
-        <form method="post" action="/">
-            <div class="mb-3">
-                <textarea name="prompt" rows="4" class="form-control" placeholder="Задайте вопрос..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-light">Спросить ИИ</button>
-        </form>
-
-        {% if ai_answer %}
-        <div class="mt-3 p-3 bg-dark text-white rounded">
-            {{ ai_answer }}
+    <!-- Ряд: промпт + чат -->
+    <div class="row g-4">
+      <div class="col-12 col-lg-7">
+        <label class="form-label">Prompt</label>
+        <div class="input-wrap">
+          <textarea id="prompt" class="form-control" placeholder="Напиши запрос... (Enter — отправить, Shift+Enter — перенос)"></textarea>
+          <button id="send" class="btn btn-primary" style="white-space:nowrap">Отправить</button>
         </div>
-        {% endif %}
-    </div>
-</div>
+        <div class="smallmuted mt-2">Источник: POST /ask (JSON)</div>
+      </div>
 
-
-        <div class="card bg-secondary mb-4">
-            <div class="card-body">
-                <h2 class="card-title">🔍 Поиск тендеров</h2>
-                <form method="get" action="/parse">
-                    <div class="mb-3">
-                        <input type="text" name="q" class="form-control" placeholder="Например: бумага А4 или ноутбук" />
-                    </div>
-                    <button type="submit" class="btn btn-light">Найти тендеры</button>
-                </form>
-                {% if parse_results %}
-                <div class="mt-3 p-3 bg-dark text-white rounded">
-                    {% for item in parse_results %}
-                        <p>{{ item }}</p>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </div>
+      <div class="col-12 col-lg-5">
+        <h5 class="mb-2">AI-помощник</h5>
+        <div id="chat" class="chat">
+          <div class="msg bot">Привет! Введи запрос слева и нажми «Отправить».</div>
         </div>
+      </div>
     </div>
+
+    <!-- Секция парсера -->
+    <div class="card-b p-3 mt-4">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <h4 class="m-0">Парсер закупок</h4>
+        <div class="smallmuted">POST /parse → { query, sources, limit }</div>
+      </div>
+
+      <div class="row g-3 mt-1">
+        <div class="col-12 col-lg-8">
+          <label class="form-label">Запрос (query)</label>
+          <input id="q" class="form-control" placeholder="например: бумага офисная А4">
+        </div>
+        <div class="col-6 col-lg-2">
+          <label class="form-label">Limit</label>
+          <input id="limit" type="number" class="form-control" value="10" min="1" max="100">
+        </div>
+        <div class="col-6 col-lg-2 d-flex align-items-end">
+          <button id="runParse" class="btn btn-success w-100">Искать</button>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="src_rts" value="rts" checked>
+          <label class="form-check-label" for="src_rts">rts</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="src_sber" value="sber" checked>
+          <label class="form-check-label" for="src_sber">sber</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="src_zakazrf" value="zakazrf" checked>
+          <label class="form-check-label" for="src_zakazrf">zakazrf</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="src_agregatoreat" value="agregatoreat" checked>
+          <label class="form-check-label" for="src_agregatoreat">agregatoreat</label>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <div id="meta" class="smallmuted"></div>
+        <div class="table-responsive mt-2">
+          <table id="tbl" class="table table-sm table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Источник</th>
+                <th>Заголовок</th>
+                <th>Цена</th>
+                <th>Срок</th>
+                <th>Ссылка</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="mt-3">
+          <h6 class="mb-1">Ошибки</h6>
+          <pre id="errs" class="result-box">—</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==== ЧАТ ====
+    const chat = document.getElementById('chat');
+    const promptEl = document.getElementById('prompt');
+    const sendBtn = document.getElementById('send');
+
+    function addMsg(role, text){
+      const d = document.createElement('div');
+      d.className = 'msg ' + (role === 'user' ? 'user' : 'bot');
+      d.textContent = text;
+      chat.appendChild(d);
+      chat.scrollTop = chat.scrollHeight;
+      return d;
+    }
+
+    async function send(){
+      const prompt = promptEl.value.trim();
+      if(!prompt) return;
+      sendBtn.disabled = true;
+
+      addMsg('user', prompt);
+      const pending = addMsg('bot', '…');
+
+      try{
+        const r = await fetch('/ask', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ prompt })
+        });
+        const data = await r.json();
+        pending.textContent = data.answer ?? JSON.stringify(data, null, 2);
+      }catch(e){
+        pending.textContent = 'Ошибка: ' + e.message;
+      }finally{
+        sendBtn.disabled = false;
+        promptEl.value = '';
+        promptEl.focus();
+      }
+    }
+    sendBtn.onclick = send;
+    promptEl.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); send(); }
+    });
+
+    // ==== ПАРСЕР ====
+    const runBtn = document.getElementById('runParse');
+    const tblBody = document.querySelector('#tbl tbody');
+    const errs = document.getElementById('errs');
+    const meta = document.getElementById('meta');
+
+    function getSources(){
+      return [...document.querySelectorAll('input.form-check-input:checked')].map(x=>x.value);
+    }
+
+    function renderRows(items){
+      tblBody.innerHTML = '';
+      let i = 1;
+      for(const it of items){
+        // Пытаемся взять «красивые» поля, иначе рендерим как JSON
+        const src = it.source ?? it.src ?? '';
+        const title = it.title ?? it.name ?? it.description ?? '';
+        const price = it.price ?? it.amount ?? it.cost ?? '';
+        const deadline = it.deadline ?? it.date_end ?? it.closing_date ?? '';
+        const url = it.url ?? it.link ?? '';
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="text-muted">${i++}</td>
+          <td>${src}</td>
+          <td>${title ? title : '<span class="text-muted">—</span>'}</td>
+          <td>${price ? price : '<span class="text-muted">—</span>'}</td>
+          <td>${deadline ? deadline : '<span class="text-muted">—</span>'}</td>
+          <td>${url ? `<a class="trunc" href="${url}" target="_blank">${url}</a>` : '<span class="text-muted">—</span>'}</td>
+        `;
+        tblBody.appendChild(tr);
+
+        // если вообще непохоже — внизу строки добавим «сырой JSON»
+        if(!title && !price && !deadline && !url){
+          const tr2 = document.createElement('tr');
+          tr2.innerHTML = `<td></td><td colspan="5"><pre class="result-box mb-0">${JSON.stringify(it, null, 2)}</pre></td>`;
+          tblBody.appendChild(tr2);
+        }
+      }
+    }
+
+    async function runParse(){
+      runBtn.disabled = true;
+      meta.textContent = 'Выполняю…';
+      errs.textContent = '—';
+      tblBody.innerHTML = '';
+
+      const body = {
+        query: document.getElementById('q').value.trim(),
+        sources: getSources(),
+        limit: Math.max(1, Number(document.getElementById('limit').value) || 10),
+      };
+      if(!body.query){ meta.textContent = 'Укажи запрос.'; runBtn.disabled = false; return; }
+
+      try{
+        const r = await fetch('/parse', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify(body)
+        });
+        const data = await r.json();
+
+        meta.textContent = `Найдено: ${data.count ?? 0}`;
+        renderRows(data.results ?? []);
+        errs.textContent = (data.errors && Object.keys(data.errors).length)
+          ? JSON.stringify(data.errors, null, 2)
+          : 'Ошибок нет';
+      }catch(e){
+        meta.textContent = '';
+        errs.textContent = 'Ошибка запроса: ' + e.message;
+      }finally{
+        runBtn.disabled = false;
+      }
+    }
+    runBtn.onclick = runParse;
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
