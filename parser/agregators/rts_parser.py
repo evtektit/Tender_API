@@ -1,54 +1,59 @@
-# parser/agregators/rts_parser.py
-import httpx
-from typing import List, Dict, Any
+from playwright.sync_api import sync_playwright
+import pandas as pd
+import json
 
-URL = "https://rts-tender.ru/poisk/search/getsearchprofile"
+def save_to_csv(data, filename="rts_tenders.csv"):
+    df = pd.DataFrame(data)
+    df.to_csv(filename, index=False, encoding="utf-8-sig")
+    print(f"✅ Сохранено в CSV: {filename}")
 
-HEADERS = {
-    "Content-Type": "application/json",
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-        "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-    ),
-}
+def save_to_excel(data, filename="rts_tenders.xlsx"):
+    df = pd.DataFrame(data)
+    df.to_excel(filename, index=False)
+    print(f"✅ Сохранено в Excel: {filename}")
 
+def run_rts_parser(query: str = "", limit: int = 12):
+    result_data = []
 
-async def rts_search(query: str, limit: int = 10, logger=None) -> List[Dict[str, Any]]:
-    if logger:
-        logger.info(f"🔍 RTS API: query={query} (limit={limit})")
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        context = browser.new_context()
+        page = context.new_page()
 
-    payload = {
-        "type": 1,
-        "searchQuery": query,
-        "skip": 0,
-        "top": limit,
-        "sortType": 1
-    }
+        # Слушаем все ответы
+        def handle_response(response):
+            if "search" in response.url and response.status == 200:
+                try:
+                    data = response.json()
+                    tenders = data.get("data", {}).get("Items", [])
+                    for tender in tenders:
+                        result_data.append({
+                            "Номер закупки": tender.get("PurchaseNumber"),
+                            "Название": tender.get("PurchaseName"),
+                            "Цена": tender.get("Price"),
+                            "Дата окончания": tender.get("EndDate"),
+                            "Ссылка": "https://www.rts-tender.ru" + tender.get("Url", "")
+                        })
+                except Exception as e:
+                    print("Ошибка разбора JSON:", e)
 
-    try:
-        async with httpx.AsyncClient(timeout=20.0) as client:
-            response = await client.post(URL, headers=HEADERS, json=payload)
-            response.raise_for_status()
-            data = response.json()
-    except Exception as e:
-        if logger:
-            logger.error(f"❌ RTS API ошибка: {e}")
-        return []
+        page.on("response", handle_response)
 
-    tenders = []
-    for item in data.get("data", []):
-        tenders.append({
-            "title": item.get("name", "Без названия"),
-            "url": item.get("url", ""),
-            "price": item.get("price", None),
-            "deadline": item.get("publishDate", None),
-        })
-
-    if logger:
-        logger.info(f"📦 RTS API: собрано {len(tenders)} позиций")
-    return tenders
+        # Загружаем страницу и ждём XHR
+        page.goto(f"https://www.rts-tender.ru/poisk?SearchString={query}")
+        page.wait_for_timeout(5000)
 
 
-# Точка входа для run_all.py
-async def search(query: str, limit: int = 10, logger=None) -> list[dict]:
-    return await rts_search(query=query, limit=limit, logger=logger)
+
+        browser.close()
+
+    return result_data
+
+if __name__ == "__main__":
+    data = run_rts_parser()
+
+    if data:
+        save_to_csv(data)
+        save_to_excel(data)
+    else:
+        print("❌ Не удалось получить данные.")

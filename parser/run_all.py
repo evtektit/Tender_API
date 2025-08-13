@@ -13,7 +13,7 @@ SOURCE_MAP = {
     "agregatoreat": "parser.agregators.agregatoreat_parser",
 }
 
-CANDIDATES = ("search", "run", "parse", "start", "main")
+CANDIDATES = ("run_rts_parser", "search", "run", "parse", "start", "main")
 
 
 async def _run_one(src: str, query: str, limit: int) -> List[Dict[str, Any]]:
