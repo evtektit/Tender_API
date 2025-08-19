@@ -8,7 +8,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Копируем код
 COPY api /app/api
-COPY parser /app/parser
 COPY ai_worker /app/ai_worker
 COPY common /app/common
 COPY main.py /app/main.py

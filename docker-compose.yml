@@ -4,7 +4,7 @@ services:
 
   api:
     build:
-      context: Tender_API
+      context: .
       dockerfile: api/Dockerfile.api
     container_name: tenderbotaiproject-api
     restart: always
@@ -17,23 +17,20 @@ services:
     networks:
       - tender-net
 
-  parser:
+  eis_api:
     build:
-      context: parser
-      dockerfile: parser/Dockerfile.parser
-    container_name: tenderbotaiproject-parser
-    restart: always
-    env_file:
-      - .env
-    depends_on:
-      - api
-    networks:
-      - tender-net  # ❗️без VPN
+      context: ./eis_api
+      dockerfile: Dockerfile.eis
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    container_name: eis_api
+    restart: "no"
 
   telegram_bot:
     build:
-      context: telegram_bot
-      dockerfile: telegram_bot/Dockerfile.bot
+      context: ./telegram_bot
+      dockerfile: Dockerfile.bot
     container_name: tenderbotaiproject-telegram-bot
     restart: always
     env_file:
@@ -50,8 +47,8 @@ services:
 
   ai_worker:
     build:
-      context: ai_worker
-      dockerfile: ai_worker/Dockerfile.ai
+      context: ./ai_worker
+      dockerfile: Dockerfile.ai
     container_name: tenderbotaiproject-ai-worker
     restart: always
     env_file:
@@ -60,18 +57,16 @@ services:
 
   vpn_gateway:
     build:
-      context: vpn_gateway
-      dockerfile: vpn_gateway/Dockerfile
+      context: ./vpn_gateway
+      dockerfile: Dockerfile.vpn
     container_name: tenderbotaiproject-vpn
-    cap_add:
-      - NET_ADMIN
-    devices:
-      - /dev/net/tun
+    cap_add: [ "NET_ADMIN" ]
+    devices: [ "/dev/net/tun" ]
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=0
     volumes:
       - ./vpn_gateway/vpn_configs:/etc/openvpn
-    restart: always
+    restart: "no"
     networks:
       - tender-net
     dns:
@@ -80,18 +75,17 @@ services:
 
   watchdog:
     build:
-      context: watchdog
-      dockerfile: watchdog/Dockerfile.watchdog
+      context: ./watchdog
+      dockerfile: Dockerfile.watchdog
     container_name: tenderbotaiproject-watchdog
     restart: always
     environment:
-       - API_URL=http://api:8000/health
+      - API_URL=http://api:8000/health
     depends_on:
-       - api
+      - api
     networks:
-       - tender-net
+      - tender-net
 
 networks:
   tender-net:
     driver: bridge
-
