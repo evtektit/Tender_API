@@ -4,7 +4,7 @@ services:
 
   api:
     build:
-      context: .
+      context: ./api
       dockerfile: api/Dockerfile.api
     container_name: tenderbotaiproject-api
     restart: always

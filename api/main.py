@@ -1,57 +1,47 @@
-from fastapi import FastAPI, Request, Form
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
+from pathlib import Path
+import logging
+
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
-from api.routes import parser_route, ai
-from ai_worker.openai_client import ask_gpt
-import os
-import traceback
+
+# логгер: используем твой, а если его нет — стандартный
+try:
+    from ai_worker.logger import get_logger
+    logger = get_logger(__name__)
+except Exception:
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+    logger = logging.getLogger(__name__)
+
+from api.routes import home, ai  # подключим роутеры
+
+BASE_DIR = Path(__file__).resolve().parent  # .../api
 app = FastAPI(debug=True)
 
-from ai_worker.logger import get_logger
-logger = get_logger(__name__)
+# статика по абсолютному пути, чтобы независимо от рабочей директории
+app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 
 @app.on_event("startup")
-async def startup_event():
+async def _startup():
     logger.info("🚀 FastAPI стартовал")
 
 @app.on_event("shutdown")
-async def shutdown_event():
+async def _shutdown():
     logger.info("🛑 FastAPI завершил работу")
 
-templates = Jinja2Templates(directory=os.path.join("api", "templates"))
+# здоровье
+@app.get("/health")
+def health():
+    return {"ok": True}
 
-# Статика (если понадобится позже)
-app.mount("/static", StaticFiles(directory="api/static"), name="static")
+# простой API-заглушка для поиска
+@app.post("/search")
+async def search_tenders_api(request: Request):
+    data = await request.json()
+    query = data.get("query", "")
+    logger.info(f"📥 Поисковый запрос: {query}")
+    return JSONResponse({"result": f"🔍 Имитация результатов по запросу: {query}"})
 
-# Подключаем маршруты
-app.include_router(parser_route.router)
+# подключаем роутеры (главная страница и эндпоинт ИИ)
+app.include_router(home.router)
 app.include_router(ai.router)
-
-@app.get("/", response_class=HTMLResponse)
-async def index(request: Request, q: str = None):
-    try:
-        parse_results = None
-        if q:
-            parse_results = search_tenders(q)
-        return templates.TemplateResponse("main_template_ui.html", {
-            "request": request,
-            "parse_results": parse_results
-        })
-    except Exception as e:
-        print("💥 Ошибка в index:", e)
-        traceback.print_exc()
-        return HTMLResponse("❌ Ошибка при отображении страницы", status_code=500)
-
-@app.post("/", response_class=HTMLResponse)
-async def ask_ai(request: Request, prompt: str = Form(...)):
-    try:
-        ai_result = ask_gpt(prompt)
-        return templates.TemplateResponse("main_template_ui.html", {
-            "request": request,
-            "ai_result": ai_result
-        })
-    except Exception as e:
-        print("💥 Ошибка в ask_ai:", e)
-        traceback.print_exc()
-        return HTMLResponse("❌ Ошибка при работе с AI", status_code=500)

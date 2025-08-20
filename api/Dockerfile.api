@@ -11,6 +11,7 @@ COPY api /app/api
 COPY ai_worker /app/ai_worker
 COPY common /app/common
 COPY main.py /app/main.py
+COPY . /srv/
 
 ENV PYTHONPATH=/app
 
