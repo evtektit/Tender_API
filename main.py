@@ -1,4 +1,3 @@
-# ── main.py ──────────────────────────────────────────────────────────────────
 import sys
 import asyncio
 
@@ -9,7 +8,7 @@ if sys.platform == "win32":
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
-from api.routes import home, ai, parser_route
+from api.routes import home, ai
 from ai_worker.logger import get_logger
 
 app = FastAPI()
@@ -18,12 +17,12 @@ app = FastAPI()
 async def health_check():
     return JSONResponse(content={"status": "ok"})
 
-logger = get_logger("main")
+logger = get_logger(__name__)   # логгер с app.log по умолчанию
 logger.info("🚀 Запуск FastAPI приложения")
 
+# Подключаем роуты
 app.include_router(home.router)
 app.include_router(ai.router)
-app.include_router(parser_route.router)
 
 if __name__ == "__main__":
     import uvicorn
