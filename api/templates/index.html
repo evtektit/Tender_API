@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>TenderBot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- мобилка -->
+  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+  <link rel="icon" href="{{ url_for('static', path='favicon.ico') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>TenderBot</h1>
+    <div class="grid">
+      <!-- Левая колонка: ИИ -->
+      <div class="card">
+        <h2>ИИ помощник</h2>
+        <form method="post" action="/">
+          <div class="form-row">
+            <input type="text" name="prompt" placeholder="Спроси ИИ..." value="{{ user_prompt or '' }}">
+            <button type="submit">Спросить</button>
+          </div>
+        </form>
+        {% if ai_answer %}
+        <div style="margin-top:12px">
+          <h3>Ответ:</h3>
+          <div>{{ ai_answer|safe }}</div>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Правая колонка: Поиск (парсер) -->
+      <div class="card">
+        <h2>Поиск тендеров</h2>
+        <form id="search-form" onsubmit="return false;">
+          <div class="form-row">
+            <input type="text" id="q" placeholder="Например: бумага А4, мебель...">
+            <button onclick="runSearch()">Искать</button>
+          </div>
+        </form>
+        <div id="results" style="margin-top:12px"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function runSearch() {
+      const q = document.getElementById('q').value.trim();
+      const box = document.getElementById('results');
+      box.innerHTML = 'Ищу...';
+      try {
+        const r = await fetch('/search', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({query: q})
+        });
+        const data = await r.json();
+        if (data.error) { box.innerHTML = data.error; return; }
+        box.innerHTML = (data.result || []).map(item => `
+          <div style="padding:8px 0; border-bottom:1px solid #f0f0f0">
+            <div><a href="${item.link}" target="_blank">${item.title || '—'}</a></div>
+            <div style="color:#6b7280">${item.buyer || ''}</div>
+          </div>
+        `).join('') || 'Пусто';
+      } catch (e) {
+        box.innerHTML = 'Ошибка запроса';
+      }
+    }
+  </script>
+</body>
+</html>

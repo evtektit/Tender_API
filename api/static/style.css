@@ -1,84 +1,41 @@
-body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 0;
-    color: #333;
+/* базовая типографика/фон */
+* { box-sizing: border-box; }
+body { font-family: Arial, sans-serif; background:#f8f9fa; margin:0; }
+h1 { text-align:center; margin:24px 0; }
+
+/* контейнер */
+.container { max-width:1200px; margin:0 auto; padding:0 16px 32px; }
+
+/* единый лэйаут: только GRID */
+.layout {
+  display:grid;
+  grid-template-columns:1fr;  /* мобилка */
+  gap:20px;
+  align-items:stretch;        /* карточки в строке одной высоты */
+}
+@media (min-width:960px) {
+  .layout { grid-template-columns:1fr 1fr; } /* десктоп */
 }
 
-.container {
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 0 15px;
-}
-
-.title {
-    text-align: center;
-    font-size: 2em;
-    margin-bottom: 30px;
-    color: #222;
-}
-
+/* карточка */
 .card {
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
-    padding: 25px;
-    margin-bottom: 30px;
+  display:flex; flex-direction:column; height:100%;
+  padding:20px; background:#fff; border:1px solid #e5e7eb;
+  border-radius:12px; box-shadow:0 1px 3px rgba(0,0,0,.05);
 }
+.card h2 { margin:0 0 12px; }
+.card-body { flex:1; display:flex; flex-direction:column; gap:12px; }
 
-h2 {
-    margin-top: 0;
-    color: #444;
+/* формы */
+.form-row { display:flex; gap:8px; }
+.form-row input[type="text"] {
+  flex:1; padding:10px; border:1px solid #d1d5db; border-radius:8px;
 }
-
-textarea,
-input[type="text"] {
-    width: 100%;
-    padding: 12px;
-    margin-top: 12px;
-    margin-bottom: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1em;
-    resize: vertical;
-}
-
 button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 18px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background 0.3s ease;
+  padding:10px 14px; border:0; border-radius:8px; cursor:pointer;
+  background:#22c55e; color:#fff; font-weight:600;
 }
+button:hover { filter:brightness(0.95); }
 
-button:hover {
-    background-color: #45a049;
-}
-
-.result {
-    background-color: #f1f1f1;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 10px;
-    font-style: italic;
-    color: #111;
-}
-
-@media (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-
-    .title {
-        font-size: 1.5em;
-    }
-
-    button {
-        width: 100%;
-        margin-top: 10px;
-    }
-}
+/* области с прокруткой, чтобы тянулись до низа */
+.answer, .results { flex:1; overflow-y:auto; }

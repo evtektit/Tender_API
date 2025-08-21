@@ -1,45 +1,79 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>TenderBot :: AI & Parser</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+  <meta charset="utf-8">
+  <title>TenderBot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="{{ url_for('static', path='favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}?v=3">
 </head>
 <body>
-    <div class="container">
-        <h1 class="title">TenderBot :: AI & Parser</h1>
+  <div class="container">
+    <h1>TenderBot</h1>
 
-        <div class="card">
-            <h2>🤖 AI-ассистент</h2>
-            <form method="post" action="/">
-                <textarea name="prompt" placeholder="Задайте вопрос..." required>{{ request.form.prompt if request.form else '' }}</textarea>
-                <button type="submit">Спросить ИИ</button>
-            </form>
-            {% if ai_result %}
-                <div class="result">{{ ai_result }}</div>
+    <div class="layout">
+      <!-- Левая колонка: ИИ -->
+      <div class="card">
+        <h2>ИИ помощник</h2>
+        <div class="card-body">
+          <form method="post" action="/">
+            <div class="form-row">
+              <input type="text" name="prompt" placeholder="Спроси ИИ..." value="{{ user_prompt or '' }}" required>
+              <button type="submit">Спросить</button>
+            </div>
+          </form>
+
+          <div class="answer">
+            {% if ai_answer %}
+              <div><strong>Ответ:</strong></div>
+              <div>{{ ai_answer | replace('\n','<br>') | safe }}</div>
             {% endif %}
+          </div>
         </div>
+      </div>
 
-        <div class="card">
-            <h2>🔍 Поиск тендеров</h2>
-            <input type="text" id="tender-query" placeholder="Например: бумага А4 или ноутбук">
-            <button onclick="searchTenders()">Найти тендеры</button>
-            <div id="tender-results"></div>
+      <!-- Правая колонка: Поиск тендеров -->
+      <div class="card">
+        <h2>Поиск тендеров</h2>
+        <div class="card-body">
+          <form id="search-form" onsubmit="return false;">
+            <div class="form-row">
+              <input type="text" id="q" placeholder="Например: бумага А4, мебель..." required>
+              <button onclick="runSearch()">Искать</button>
+            </div>
+          </form>
+
+          <div id="results" class="results"></div>
         </div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        async function searchTenders() {
-            const query = document.getElementById('tender-query').value;
-            const response = await fetch('/search', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query })
-            });
-            const data = await response.json();
-            document.getElementById('tender-results').textContent = data.result;
-        }
-    </script>
+  <script>
+  async function runSearch() {
+    const q = document.getElementById('q').value.trim();
+    const box = document.getElementById('results');
+    if (!q) { box.textContent = 'Введите запрос'; return; }
+    box.textContent = 'Ищу...';
+    try {
+      const r = await fetch('/search', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({query: q})
+      });
+      const data = await r.json();
+      if (data.error) { box.textContent = data.error; return; }
+      const arr = data.result || [];
+      box.innerHTML = arr.length ? arr.map(x => `
+        <div style="padding:8px 0; border-bottom:1px solid #f0f0f0">
+          <div><a href="${x.link||'#'}" target="_blank">${x.title||'—'}</a></div>
+          <div style="color:#6b7280">${x.buyer||''}</div>
+        </div>
+      `).join('') : 'Ничего не найдено';
+    } catch {
+      box.textContent = 'Ошибка запроса';
+    }
+  }
+  </script>
 </body>
 </html>
