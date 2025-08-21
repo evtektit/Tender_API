@@ -1,6 +1,7 @@
-from pathlib import Path
 import logging
-
+import os
+import asyncio
+from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -21,13 +22,26 @@ app = FastAPI(debug=True)
 # статика по абсолютному пути, чтобы независимо от рабочей директории
 app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 
+# === Telegram polling ===
+TG_POLLING = os.getenv("TG_POLLING", "0") == "1"
+_polling_task: asyncio.Task | None = None
+
 @app.on_event("startup")
 async def _startup():
     logger.info("🚀 FastAPI стартовал")
+    global _polling_task
+    if TG_POLLING:
+     from telegram_bot.bot import run_polling
+     loop = asyncio.get_running_loop()
+     _polling_task = loop.create_task(run_polling())
+
 
 @app.on_event("shutdown")
 async def _shutdown():
     logger.info("🛑 FastAPI завершил работу")
+    global _polling_task
+    if _polling_task and not _polling_task.done():
+     _polling_task.cancel()
 
 # здоровье
 @app.get("/health")
