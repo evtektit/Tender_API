@@ -5,7 +5,7 @@ services:
   api:
     build:
       context: ./api
-      dockerfile: api/Dockerfile.api
+      dockerfile: Dockerfile.api
     container_name: tenderbotaiproject-api
     restart: always
     env_file:
@@ -19,13 +19,33 @@ services:
 
   eis_api:
     build:
-      context: ./eis_api
+      context: .
       dockerfile: Dockerfile.eis
     dns:
       - 8.8.8.8
       - 1.1.1.1
     container_name: eis_api
     restart: "no"
+
+  parsers:
+    build:
+      context: ./parsers
+      dockerfile: Dockerfile.pars
+    container_name: tenderbotaiproject-parsers
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    sysctls:
+      net.ipv6.conf.all.disable_ipv6: 0
+    volumes:
+      - ./logs:/app/logs
+    restart: "no"
+    networks:
+      - tender-net
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
 
   telegram_bot:
     build:

@@ -7,7 +7,6 @@ __pycache__/
 .venv/
 *.sqlite3
 *.log
-logs/
 
 # VSCode/PyCharm
 .vscode/
@@ -16,10 +15,3 @@ logs/
 # System
 .DS_Store
 Thumbs.db.
-
-# PostgreSQL data
-data/
-*.pid
-*.conf
-.docker_data/
-
