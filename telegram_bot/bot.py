@@ -13,15 +13,29 @@ logger.info("🚀 Telegram-бот стартует")
 
 # Загрузка .env
 load_dotenv()
+
+import socket
+
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+ENVIRONMENT = os.getenv("ENVIRONMENT", "docker")
 
-env = os.getenv("ENVIRONMENT", "docker")
-
-if env == "local":
+# Выбор API_URL в зависимости от среды
+if ENVIRONMENT == "local":
     API_URL = "http://localhost:8000/ai/ask"
 else:
     API_URL = "http://api:8000/ai/ask"
 
+# Логируем важную информацию
+logger.info(f"🧠 Окружение: {ENVIRONMENT}")
+logger.info(f"🌐 API_URL: {API_URL}")
+logger.info(f"🔐 BOT_TOKEN начинается с: {BOT_TOKEN[:10] if BOT_TOKEN else '❌ отсутствует'}")
+logger.info(f"🧬 PID процесса: {os.getpid()}")
+try:
+    hostname = socket.gethostname()
+    ip = socket.gethostbyname(hostname)
+    logger.info(f"🖥️ Хост: {hostname} | IP: {ip}")
+except Exception as e:
+    logger.warning(f"⚠️ Не удалось определить IP: {e}")
 
 # Бот и диспетчер
 bot = Bot(token=BOT_TOKEN)

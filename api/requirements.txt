@@ -3,7 +3,8 @@ uvicorn
 jinja2
 httpx
 python-dotenv
-openai>=1.0.0
+openai
 requests
 colorlog
-
+python-multipart
+aiogram

@@ -2,8 +2,8 @@ FROM python:3.11
 
 WORKDIR /app
 
-COPY watchdog /app
+COPY watchdog /app/watchdog
 COPY watchdog/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-CMD ["python", "watchdog.py"]
+CMD ["python", "watchdog/watchdog.py"]
