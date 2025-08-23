@@ -1,10 +1,12 @@
-FROM python:3.11-slim
-WORKDIR /srv
+FROM python:3.11
 
-COPY requirements.txt .
+WORKDIR /app
+
+COPY eis_api/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY eis_api /srv/eis_api
-ENV PYTHONPATH=/srv
+COPY eis_api/ /app/eis_api
+COPY common/ /app/common
 
-CMD ["python", "-m", "eis_api.run_eis"]
+ENV PYTHONPATH=/app
+CMD ["python", "-m", "eis_api.eis_client"]

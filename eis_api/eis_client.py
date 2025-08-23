@@ -7,6 +7,10 @@ from datetime import datetime
 import uuid
 import xmltodict
 import time
+from common.logger import get_logger
+
+logger = get_logger(__name__)
+logger.info("eis_api started!")
 
 DEFAULT_URL = "https://int44.zakupki.gov.ru/eis-integration/services/getDocsIP"
 

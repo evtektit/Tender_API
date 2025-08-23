@@ -1,9 +1,10 @@
 from fastapi import FastAPI, Request, Body
 from pydantic import BaseModel
 from .openai_client import ask_gpt
-from .logger import get_logger
+from common.logger import get_logger
 
 logger = get_logger(__name__)
+logger.info("ai_worker started!")
 app = FastAPI()
 
 class GPTRequest(BaseModel):

@@ -5,6 +5,10 @@ from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
+from common.logger import get_logger
+
+logger = get_logger(__name__)
+logger.info("api started!")
 
 # логгер: используем твой, а если его нет — стандартный
 try:

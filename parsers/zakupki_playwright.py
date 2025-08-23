@@ -1,5 +1,6 @@
 from playwright.sync_api import sync_playwright
 from typing import List, Dict
+from common.logger import get_logger
 
 def search_zakupki(query: str, max_items: int = 10) -> List[Dict]:
     """

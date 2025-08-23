@@ -1,4 +1,4 @@
-from watchdog.logger import get_logger as watchdog_get_logger
+from common.logger import get_logger as watchdog_get_logger
 
 def get_logger(name: str, filename: str = "app.log"):
     """

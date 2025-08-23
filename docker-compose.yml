@@ -1,11 +1,10 @@
 version: "3.9"
 
 services:
-
   api:
     build:
-      context: ./api
-      dockerfile: Dockerfile.api
+      context: .
+      dockerfile: api/Dockerfile.api
     container_name: tenderbotaiproject-api
     restart: always
     env_file:
@@ -17,40 +16,10 @@ services:
     networks:
       - tender-net
 
-  eis_api:
-    build:
-      context: .
-      dockerfile: Dockerfile.eis
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
-    container_name: eis_api
-    restart: "no"
-
-  parsers:
-    build:
-      context: ./parsers
-      dockerfile: Dockerfile.pars
-    container_name: tenderbotaiproject-parsers
-    cap_add:
-      - NET_ADMIN
-    devices:
-      - /dev/net/tun
-    sysctls:
-      net.ipv6.conf.all.disable_ipv6: 0
-    volumes:
-      - ./logs:/app/logs
-    restart: "no"
-    networks:
-      - tender-net
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
-
   telegram_bot:
     build:
-      context: ./telegram_bot
-      dockerfile: Dockerfile.bot
+      context: .
+      dockerfile: telegram_bot/Dockerfile.bot
     container_name: tenderbotaiproject-telegram-bot
     restart: always
     env_file:
@@ -59,50 +28,28 @@ services:
       - ./logs:/app/logs
     depends_on:
       - api
-      - ai_worker
     networks:
       - tender-net
-    dns:
-      - 8.8.8.8
+
+  watchdog:
+    build:
+      context: .
+      dockerfile: watchdog/Dockerfile.watchdog
+    container_name: tenderbotaiproject-watchdog
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - tender-net
 
   ai_worker:
     build:
-      context: ./ai_worker
-      dockerfile: Dockerfile.ai
+      context: .
+      dockerfile: ai_worker/Dockerfile.ai
     container_name: tenderbotaiproject-ai-worker
     restart: always
     env_file:
       - .env
-    network_mode: "service:vpn_gateway"  # 👈 только AI через VPN
-
-  vpn_gateway:
-    build:
-      context: ./vpn_gateway
-      dockerfile: Dockerfile.vpn
-    container_name: tenderbotaiproject-vpn
-    cap_add: [ "NET_ADMIN" ]
-    devices: [ "/dev/net/tun" ]
-    sysctls:
-      - net.ipv6.conf.all.disable_ipv6=0
-    volumes:
-      - ./vpn_gateway/vpn_configs:/etc/openvpn
-    restart: "no"
-    networks:
-      - tender-net
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
-
-  watchdog:
-    build:
-      context: ./watchdog
-      dockerfile: Dockerfile.watchdog
-    container_name: tenderbotaiproject-watchdog
-    restart: always
-    environment:
-      - API_URL=http://api:8000/health
-    depends_on:
-      - api
     networks:
       - tender-net
 

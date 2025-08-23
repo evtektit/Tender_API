@@ -1,4 +1,3 @@
-# telegram_bot/bot.py
 import asyncio
 import os
 from aiogram import Bot, Dispatcher
@@ -6,7 +5,7 @@ from aiogram.types import Message
 from aiogram.filters import CommandStart
 from dotenv import load_dotenv
 import httpx
-from logger import get_logger
+from common.logger import get_logger
 
 # Логгер
 logger = get_logger(__name__)
