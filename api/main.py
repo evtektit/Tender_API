@@ -1,58 +1,40 @@
-import logging
 import os
 import asyncio
 from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
+
 from common.logger import get_logger
+from api.routes import home, ai  # подключаем роутеры
 
 logger = get_logger(__name__)
 logger.info("api started!")
 
-# логгер: используем твой, а если его нет — стандартный
-try:
-    from ai_worker.logger import get_logger
-    logger = get_logger(__name__)
-except Exception:
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-    logger = logging.getLogger(__name__)
-
-from api.routes import home, ai  # подключим роутеры
-
 BASE_DIR = Path(__file__).resolve().parent  # .../api
 app = FastAPI(debug=True)
 
-# статика по абсолютному пути, чтобы независимо от рабочей директории
+# статика по абсолютному пути
 app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
 
-# === Telegram polling ===
+# === Telegram polling (отключён, потому что бот — отдельный контейнер) ===
 TG_POLLING = os.getenv("TG_POLLING", "0") == "1"
 _polling_task: asyncio.Task | None = None
 
 @app.on_event("startup")
 async def _startup():
     logger.info("🚀 FastAPI стартовал")
-    global _polling_task
-    if TG_POLLING:
-     from telegram_bot.bot import run_polling
-     loop = asyncio.get_running_loop()
-     _polling_task = loop.create_task(run_polling())
-
 
 @app.on_event("shutdown")
 async def _shutdown():
     logger.info("🛑 FastAPI завершил работу")
-    global _polling_task
-    if _polling_task and not _polling_task.done():
-     _polling_task.cancel()
 
 # здоровье
 @app.get("/health")
 def health():
     return {"ok": True}
 
-# простой API-заглушка для поиска
+# простой API-заглушка
 @app.post("/search")
 async def search_tenders_api(request: Request):
     data = await request.json()
@@ -60,6 +42,6 @@ async def search_tenders_api(request: Request):
     logger.info(f"📥 Поисковый запрос: {query}")
     return JSONResponse({"result": f"🔍 Имитация результатов по запросу: {query}"})
 
-# подключаем роутеры (главная страница и эндпоинт ИИ)
+# подключаем роутеры (главная страница и ИИ)
 app.include_router(home.router)
 app.include_router(ai.router)

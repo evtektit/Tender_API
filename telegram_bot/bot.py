@@ -59,7 +59,8 @@ async def handle_any_message(message: Message):
             response = await client.post(API_URL, json={"prompt": user_input})
             result = response.json()
             reply = result.get("response", "⚠️ Нет ответа от AI")
-    except Exception as e:
+    except Exception as error:
+
         logger.exception("💥 Ошибка при запросе к AI")
         reply = f"❌ Ошибка при запросе к AI: {e}"
 
