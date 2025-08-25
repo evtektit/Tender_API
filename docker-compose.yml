@@ -10,6 +10,11 @@ services:
     command: python ai_worker/health_check.py
     ports:
       - "8010:8010"
+    healthcheck:
+      test: [ "CMD", "wget", "-qO-", "http://localhost:8010/docs" ]
+      interval: 10s
+      timeout: 5s
+      retries: 6
     networks:
       - tender-net
 
@@ -23,6 +28,11 @@ services:
       - .env
     ports:
       - "8000:8000"
+    environment:
+      - AI_WORKER_URL=${AI_WORKER_URL:-http://ai_worker:8010}
+    depends_on:
+        ai_worker:
+          condition: service_healthy
     networks:
       - tender-net
 
