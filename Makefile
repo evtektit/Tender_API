@@ -1,24 +1,38 @@
-# === 📦 Сборка и запуск ===
 
-rebuild-api:
-	docker compose build api && docker compose up -d api
+# === 📦 TenderBot Makefile (расширенный) ===
 
-rebuild-bot:
-	docker compose build telegram_bot && docker compose up -d telegram_bot
+# === 🚀 Основные команды управления ===
 
-rebuild-ai:
-	docker compose build ai_worker && docker compose up -d ai_worker
+up:
+	docker compose up -d --build
 
-rebuild-vpn:
-	docker compose build vpn_gateway && docker compose up -d vpn_gateway
+down:
+	docker compose down
 
-rebuild-watchdog:
-	docker compose build watchdog && docker compose up -d watchdog
+restart:
+	docker compose restart
 
-rebuild-all:
-	docker compose build && docker compose up -d
+build:
+	docker compose build
 
-# === 🔍 Логи ===
+logs:
+	docker compose logs -f --tail=100
+
+# === 🔧 Сборка по сервисам ===
+
+build-api:
+	docker compose build api
+
+build-bot:
+	docker compose build telegram_bot
+
+build-ai:
+	docker compose build ai_worker
+
+build-pars:
+	docker compose build parsers
+
+# === 📜 Логи по сервисам ===
 
 logs-api:
 	docker compose logs -f api
@@ -29,136 +43,55 @@ logs-bot:
 logs-ai:
 	docker compose logs -f ai_worker
 
-logs-vpn:
-	docker compose logs -f vpn_gateway
+logs-pars:
+	docker compose logs -f parsers
 
-logs-watchdog:
-	docker compose logs -f watchdog
+# === ♻️ Только перезапуск без сборки ===
 
-# === ♻️ Утилиты ===
+restart-api:
+	docker compose restart api
 
-restart:
-	docker compose restart
+restart-bot:
+	docker compose restart telegram_bot
 
-down:
-	docker compose down
+restart-ai:
+	docker compose restart ai_worker
 
-ps:
-	docker compose ps
+restart-pars:
+	docker compose restart parsers
 
-# === 💡 Примеры команд для новичка ===
-# make rebuild-api       — пересобрать только API
-# make rebuild-all       — пересобрать все контейнеры
-# make logs-ai           — смотреть лог ИИ
-# make restart           — перезапуск всех сервисов
-# make down              — остановить всё
-rebuild-api:
-	docker compose build api && docker compose up -d api
+# === ⚡ Быстрая пересборка без кеша ===
 
-rebuild-bot:
-	docker compose build telegram_bot && docker compose up -d telegram_bot
+quick-api:
+	docker compose build --no-cache api && docker compose up -d api
 
-rebuild-all:
-	docker compose build && docker compose up -d
+quick-bot:
+	docker compose build --no-cache telegram_bot && docker compose up -d telegram_bot
 
-logs-api:
-	docker compose logs -f api
+quick-ai:
+	docker compose build --no-cache ai_worker && docker compose up -d ai_worker
 
-logs-bot:
-	docker compose logs -f telegram_bot
+quick-pars:
+	docker compose build --no-cache parsers && docker compose up -d parsers
 
-restart:
-	docker compose restart
+# === 🧪 Утилиты (по желанию можно добавить реализацию) ===
 
-rebuild-api:
-	docker compose build api && docker compose up -d api
+clean:
+	docker system prune -f
 
-rebuild-bot:
-	docker compose build telegram_bot && docker compose up -d telegram_bot
+shell-api:
+	docker compose exec api bash
 
-rebuild-all:
-	docker compose build && docker compose up -d
+shell-bot:
+	docker compose exec telegram_bot bash
 
-logs-api:
-	docker compose logs -f api
+shell-ai:
+	docker compose exec ai_worker bash
 
-logs-bot:
-	docker compose logs -f telegram_bot
+shell-pars:
+	docker compose exec parsers bash
 
-restart:
-	docker compose restart
-
-# --- API ---
-rebuild-api: ...
-logs-api: ...
-
-# --- Telegram Bot ---
-rebuild-bot: ...
-logs-bot: ...
-
-# --- AI Worker ---
-rebuild-ai: ...
-logs-ai: ...
-
-# --- VPN Gateway ---
-rebuild-vpn: ...
-logs-vpn: ...
-
-# --- Общие ---
-restart: ...
-up-all: ...
-
-# === 📦 Сборка и запуск ===
-
-rebuild-api:
-	docker compose build api && docker compose up -d api
-
-rebuild-bot:
-	docker compose build telegram_bot && docker compose up -d telegram_bot
-
-rebuild-ai:
-	docker compose build ai_worker && docker compose up -d ai_worker
-
-rebuild-vpn:
-	docker compose build vpn_gateway && docker compose up -d vpn_gateway
-
-rebuild-watchdog:
-	docker compose build watchdog && docker compose up -d watchdog
-
-rebuild-all:
-	docker compose build && docker compose up -d
-
-# === 🔍 Логи ===
-
-logs-api:
-	docker compose logs -f api
-
-logs-bot:
-	docker compose logs -f telegram_bot
-
-logs-ai:
-	docker compose logs -f ai_worker
-
-logs-vpn:
-	docker compose logs -f vpn_gateway
-
-logs-watchdog:
-	docker compose logs -f watchdog
-
-# === ♻️ Утилиты ===
-
-restart:
-	docker compose restart
-
-down:
-	docker compose down
-
-ps:
-	docker compose ps
-
-# === 💡 Примеры команд для новичка ===
-# make rebuild-api       — пересобрать только API
-# make rebuild-all       — пересобрать все контейнеры
-# make logs-ai           — смотреть лог ИИ
-# make restart           — перезапуск всех сервисов
-# make down              — остановить всё
+# === ✅ TODO: можно добавить позже ===
+# lint: black . && flake8 .
+# format: black .
+# test: pytest

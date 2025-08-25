@@ -52,17 +52,29 @@ async def handle_start(message: Message):
 async def handle_any_message(message: Message):
     user_input = message.text
     logger.info(f"📝 Сообщение от {message.from_user.id}: {user_input}")
-    await message.answer("🤖 Думаю...")
+    await message.answer("🔎 Ищу подходящие тендеры...")
 
     try:
         async with httpx.AsyncClient() as client:
-            response = await client.post(API_URL, json={"prompt": user_input})
-            result = response.json()
-            reply = result.get("response", "⚠️ Нет ответа от AI")
-    except Exception as error:
+            # Сначала отправляем запрос на /search
+            search_url = API_URL.replace("/ai/ask", "/search")
+            search_resp = await client.post(search_url, json={"query": user_input})
+            search_data = search_resp.json()
+            result = search_data.get("result", "")
 
-        logger.exception("💥 Ошибка при запросе к AI")
-        reply = f"❌ Ошибка при запросе к AI: {e}"
+            if result:
+                await message.answer(f"📦 Найдено:\n{result}")
+                return
+
+            # Если не найдено — спрашиваем AI
+            await message.answer("🤖 Думаю как AI...")
+            ai_resp = await client.post(API_URL, json={"question": user_input})
+            ai_data = ai_resp.json()
+            reply = ai_data.get("answer", "⚠️ Нет ответа от AI")
+
+    except Exception as e:
+        logger.exception("💥 Ошибка при запросе")
+        reply = f"❌ Ошибка при обработке: {e}"
 
     await message.answer(reply)
 

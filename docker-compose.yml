@@ -1,16 +1,28 @@
 services:
+  ai_worker:
+    build:
+      context: .
+      dockerfile: ai_worker/Dockerfile.ai
+    container_name: tenderbotaiproject-ai-worker
+    restart: always
+    env_file:
+      - .env
+    command: python ai_worker/health_check.py
+    ports:
+      - "8010:8010"
+    networks:
+      - tender-net
+
   api:
     build:
       context: .
-      dockerfile: api/Dockerfile.api
+      dockerfile: ./api/Dockerfile.api
     container_name: tenderbotaiproject-api
     restart: always
     env_file:
       - .env
     ports:
       - "8000:8000"
-    depends_on:
-      - ai_worker
     networks:
       - tender-net
 
@@ -22,32 +34,41 @@ services:
     restart: always
     env_file:
       - .env
+    command: sh -c "python bot.py & python health_check.py"
     volumes:
       - ./logs:/app/logs
     depends_on:
       - api
+      - ai_worker
+    ports:
+      - "8011:8011"
     networks:
       - tender-net
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
 
   watchdog:
     build:
-      context: .
-      dockerfile: watchdog/Dockerfile.watchdog
+      context: ./common/watchdog
+      dockerfile: Dockerfile.watchdog
     container_name: tenderbotaiproject-watchdog
     restart: always
-    env_file:
-      - .env
+    command: "python health_check.py"
+    ports:
+      - "8012:8012"
     networks:
       - tender-net
 
-  ai_worker:
+  eis_loader:
     build:
-      context: .
-      dockerfile: ai_worker/Dockerfile.ai
-    container_name: tenderbotaiproject-ai-worker
+      context: ./parsers/eis_loader
+      dockerfile: Dockerfile.eis
+    container_name: tenderbotaiproject-eis-loader
+    command: python health_check.py
+    ports:
+      - "8013:8013"
     restart: always
-    env_file:
-      - .env
     networks:
       - tender-net
 

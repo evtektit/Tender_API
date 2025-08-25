@@ -1,8 +1,8 @@
 from dotenv import load_dotenv
-from eis_api.eis_client import EISClient
+from parsers.eis_loader.eis_client import EISClient
 from common.logger import get_logger
 
-logger = get_logger("eis_api", "eis_client.log")
+logger = get_logger("eis_loader", "eis_client.log")
 
 # Загружаем .env
 load_dotenv()

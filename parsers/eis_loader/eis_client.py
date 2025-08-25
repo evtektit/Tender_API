@@ -2,7 +2,7 @@ import os
 import requests
 from pathlib import Path
 from typing import Optional, Dict, Any, Iterable
-from eis_api.logger import logger
+from parsers.eis_loader import logger
 from datetime import datetime
 import uuid
 import xmltodict
@@ -10,7 +10,7 @@ import time
 from common.logger import get_logger
 
 logger = get_logger(__name__)
-logger.info("eis_api started!")
+logger.info("eis_loader started!")
 
 DEFAULT_URL = "https://int44.zakupki.gov.ru/eis-integration/services/getDocsIP"
 
@@ -30,7 +30,7 @@ class EISClient:
 
         self.base_url = base_url
 
-        # 📂 out всегда лежит в папке eis_api
+        # 📂 out всегда лежит в папке eis_loader
         default_out = Path(__file__).resolve().parent / "out"
         self.out_dir = Path(out_dir) if out_dir else default_out
         self.out_dir.mkdir(parents=True, exist_ok=True)

@@ -1,14 +1,15 @@
 FROM python:3.11
 
-WORKDIR /app
+WORKDIR /app/telegram_bot
 
-# Копируем код
-COPY telegram_bot/ /app/telegram_bot
-COPY common/ /app/common
-
-# Копируем requirements отдельно
+# Копируем весь проект (аккуратно)
+COPY . /app
+COPY telegram_bot /app/telegram_bot
+# Установка зависимостей из requirements Telegram-бота
 COPY telegram_bot/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
+# Устанавливаем PYTHONPATH
 ENV PYTHONPATH=/app
-CMD ["python", "telegram_bot/bot.py"]
+
+CMD ["python", "bot.py"]

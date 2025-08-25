@@ -2,10 +2,17 @@ FROM python:3.11
 
 WORKDIR /app
 
-COPY requirements.txt .
+# Копируем весь код, чтобы зависимости локальных пакетов тоже были доступны
+COPY parsers /app/parsers
+COPY common /app/common
 
+# requirements
+COPY requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+# Установка браузеров Playwright (после установки пакета)
+RUN playwright install --with-deps
 
-CMD ["python", "bot.py"]
+# Команда запуска
+CMD ["python", "parsers/eis_loader/zakupki_parser.py"]
+

@@ -4,6 +4,7 @@ from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
+from parsers.playwright_parser import parse_tenders
 
 from common.logger import get_logger
 from api.routes import home, ai  # подключаем роутеры
@@ -31,16 +32,22 @@ async def _shutdown():
 
 # здоровье
 @app.get("/health")
-def health():
-    return {"ok": True}
+async def health():
+    return JSONResponse(content={"status": "ok"})
 
-# простой API-заглушка
-@app.post("/search")
-async def search_tenders_api(request: Request):
-    data = await request.json()
-    query = data.get("query", "")
-    logger.info(f"📥 Поисковый запрос: {query}")
-    return JSONResponse({"result": f"🔍 Имитация результатов по запросу: {query}"})
+# поиск тендеров парсера
+from fastapi import Query
+
+@app.get("/search")
+async def search_tenders_api(q: str = Query(..., description="Строка поиска")):
+    logger.info(f"📥 Поисковый запрос: {q}")
+
+    try:
+        result = await parse_tenders(q)
+        return {"ok": True, "playwright": result, "playwright_count": len(result)}
+    except Exception as e:
+        logger.exception("Ошибка парсинга")
+        return {"ok": False, "error": str(e)}
 
 # подключаем роутеры (главная страница и ИИ)
 app.include_router(home.router)

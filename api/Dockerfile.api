@@ -2,17 +2,15 @@ FROM python:3.11
 
 WORKDIR /app
 
-COPY api /app/api
-COPY ai_worker /app/ai_worker
-COPY common /app/common
-COPY telegram_bot /app/telegram_bot
-
+# копируем requirements.txt
 COPY api/requirements.txt /app/requirements.txt
-COPY telegram_bot/requirements.txt /app/telegram_bot/requirements.txt
 
-RUN pip install --no-cache-dir -r /app/requirements.txt
-RUN pip install --no-cache-dir -r /app/telegram_bot/requirements.txt
+# устанавливаем зависимости
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY api /app/api
+COPY parsers /app/parsers
 
 ENV PYTHONPATH=/app
 
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "api.core:app", "--host", "0.0.0.0", "--port", "8000"]

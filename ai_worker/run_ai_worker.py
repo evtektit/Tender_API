@@ -1,5 +1,5 @@
 from ai_worker.openai_client import ask_gpt
-from ai_worker.logger import get_logger
+from common.logger import get_logger
 
 logger = get_logger(__name__)
 

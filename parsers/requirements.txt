@@ -1,5 +1,6 @@
-aiogram
 fastapi
-httpx
+lxml
 python-dotenv
+Requests
 uvicorn
+xmltodict

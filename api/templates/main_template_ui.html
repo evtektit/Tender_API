@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <title>TenderBot</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="{{ url_for('static', path='favicon.ico') }}">
-  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}?v=3">
+  <link rel="icon" href="{{ url_for('static', path='/favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}?v=3">
 </head>
 <body>
   <div class="container">
@@ -38,8 +38,8 @@
         <div class="card-body">
           <form id="search-form" onsubmit="return false;">
             <div class="form-row">
-              <input type="text" id="q" placeholder="Например: бумага А4, мебель..." required>
-              <button onclick="runSearch()">Искать</button>
+                <input type="text" id="searchInput" placeholder="Введите запрос"/>
+                <button onclick="doSearch()">Искать</button>
             </div>
           </form>
 
@@ -49,31 +49,37 @@
     </div>
   </div>
 
-  <script>
-  async function runSearch() {
-    const q = document.getElementById('q').value.trim();
-    const box = document.getElementById('results');
-    if (!q) { box.textContent = 'Введите запрос'; return; }
-    box.textContent = 'Ищу...';
-    try {
-      const r = await fetch('/search', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({query: q})
-      });
-      const data = await r.json();
-      if (data.error) { box.textContent = data.error; return; }
-      const arr = data.result || [];
-      box.innerHTML = arr.length ? arr.map(x => `
-        <div style="padding:8px 0; border-bottom:1px solid #f0f0f0">
-          <div><a href="${x.link||'#'}" target="_blank">${x.title||'—'}</a></div>
-          <div style="color:#6b7280">${x.buyer||''}</div>
-        </div>
-      `).join('') : 'Ничего не найдено';
-    } catch {
-      box.textContent = 'Ошибка запроса';
-    }
+<script>
+async function doSearch() {
+  const qEl = document.getElementById("searchInput");
+  const query = qEl.value.trim();
+  if (!query) { qEl.focus(); return; }
+
+  const res = await fetch(`/search?q=${encodeURIComponent(query)}`);
+  if (!res.ok) {
+    document.getElementById("results").innerText = "Ошибка запроса";
+    return;
   }
-  </script>
+  const data = await res.json();
+
+  let out = "";
+  if (!data.ok) {
+    out = "Ошибка запроса: " + (data.error || "");
+  } else {
+    const pw = data.playwright || [];
+    const se = data.selenium || [];
+
+    out = `<h3>Playwright (${data.playwright_count ?? pw.length})</h3><ul>`;
+    for (const item of pw) out += `<li>${item.title || JSON.stringify(item)}</li>`;
+    out += "</ul>";
+
+    out += `<h3>Selenium (${data.selenium_count ?? se.length})</h3><ul>`;
+    for (const item of se) out += `<li>${item.title || JSON.stringify(item)}</li>`;
+    out += "</ul>";
+  }
+  document.getElementById("results").innerHTML = out;
+}
+</script>
+
 </body>
 </html>

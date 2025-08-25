@@ -1,12 +1,20 @@
 FROM python:3.11
 
+# Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /app
 
-COPY ai_worker/requirements.txt /app/requirements.txt
-RUN pip install --no-cache-dir -r /app/requirements.txt
-
+# Копируем только нужную часть проекта
 COPY ai_worker /app/ai_worker
 COPY common /app/common
+COPY ai_worker/requirements.txt /app/requirements.txt
 
+# Устанавливаем зависимости, если есть requirements.txt
+COPY ai_worker/requirements.txt /app/ai_worker/requirements.txt
+RUN pip install --no-cache-dir -r /app/ai_worker/requirements.txt
+
+# Устанавливаем PYTHONPATH, чтобы видеть модули как пакеты
 ENV PYTHONPATH=/app
-CMD ["python", "-m", "ai_worker.run_ai_worker"]
+
+# Команду лучше задавать через docker-compose (что ты и делаешь)
+# Но можно оставить на всякий случай
+CMD ["python", "ai_worker/run_ai_worker.py"]
