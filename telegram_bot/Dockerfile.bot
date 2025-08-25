@@ -1,39 +1,14 @@
 # Dockerfile.telegram_bot
 FROM python:3.11-slim
 
-# Рабочая директория бота
-WORKDIR /app/telegram_bot
-
-# Сначала копируем только требования — это кешируется
-COPY telegram_bot/requirements.txt .
-
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Теперь — код бота
-COPY telegram_bot/ .
-
-# Если бот импортирует общий код, раскомментируй:
-# COPY common/ /app/common
-# ENV PYTHONPATH=/app
-
-# Боту обычно порт не нужен, поэтому EXPOSE не обязателен
-CMD ["python", "bot.py"]
-
-
-
-
-FROM python:3.11
 WORKDIR /app
 
 COPY telegram_bot/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# код бота и общий модуль
 COPY telegram_bot /app/telegram_bot
 COPY common       /app/common
 
-# чтобы 'from common...' работал
-ENV PYTHONPATH=/app
+# ENV PYTHONPATH=/app
 
-# запускаем БОТА (если он FastAPI на Uvicorn — оставь как у тебя)
 CMD ["python", "/app/telegram_bot/bot.py"]

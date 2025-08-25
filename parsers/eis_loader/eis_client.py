@@ -2,7 +2,6 @@ import os
 import requests
 from pathlib import Path
 from typing import Optional, Dict, Any, Iterable
-from parsers.eis_loader import logger
 from datetime import datetime
 import uuid
 import xmltodict

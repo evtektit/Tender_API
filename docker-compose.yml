@@ -42,21 +42,17 @@ services:
       dockerfile: telegram_bot/Dockerfile.bot
     container_name: tenderbotaiproject-telegram-bot
     restart: always
-    env_file:
-      - .env
-    command: sh -c "python bot.py & python health_check.py"
+    env_file: [ .env ]
+    working_dir: /app/telegram_bot             # ← добавь
+    command: sh -lc "python bot.py & exec python health_check.py"
     volumes:
       - ./logs:/app/logs
     depends_on:
       - api
       - ai_worker
-    ports:
-      - "8011:8011"
-    networks:
-      - tender-net
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
+    ports: [ "8011:8011" ]
+    networks: [ tender-net ]
+    dns: [ 8.8.8.8, 1.1.1.1 ]
 
   watchdog:
     build:
